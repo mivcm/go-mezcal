@@ -8,20 +8,50 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/lib/cart-context";
 import { useToast } from "@/hooks/use-toast";
+import { useUserAuthStore } from "@/hooks/use-user-auth-store";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity, totalPrice, clearCart } =
     useCart();
   const { toast } = useToast();
+  const { token, user } = useUserAuthStore();
   const [couponCode, setCouponCode] = useState("");
 
-  const handleCheckout = () => {
-    // In a real app, this would redirect to a checkout page or process
-    toast({
-      title: "Pedido recibido",
-      description: "Tu pedido ha sido procesado correctamente.",
-    });
-    clearCart();
+  const handleCheckout = async () => {
+    if (!token) {
+      toast({ title: "Debes iniciar sesión para comprar." });
+      return;
+    }
+    try {
+      const items = cartItems.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+      }));
+      const total = totalPrice; // Solo productos, sin envío ni impuestos
+      const res = await fetch("http://localhost:3001/api/v1/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          total,
+          items,
+          success_url: window.location.origin + "/orders",
+          cancel_url: window.location.origin + "/carrito",
+        }),
+      });
+      if (!res.ok) throw new Error("Error al procesar el pago");
+      const data = await res.json();
+      clearCart(); // Limpiar el carrito después de una compra exitosa
+      window.location.href = data.checkout_url;
+    } catch (err: any) {
+      toast({
+        title: "Error",
+        description:
+          err.message || "No se pudo procesar el pago",
+      });
+    }
   };
 
   if (cartItems.length === 0) {
@@ -52,6 +82,15 @@ export default function CartPage() {
     <div className="py-20 bg-stone-50 dark:bg-stone-900 min-h-screen">
       <div className="container mx-auto px-4 max-w-6xl">
         <h1 className="text-3xl font-bold mb-8 dark:text-white">Tu Carrito</h1>
+        <div className="mb-8 flex gap-4">
+          {token && user && (
+            <Link href="/orders">
+              <Button variant="outline" className="text-amber-600 border-amber-600">
+                Ver mis órdenes
+              </Button>
+            </Link>
+          )}
+        </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Cart items */}
@@ -151,24 +190,10 @@ export default function CartPage() {
                     ${totalPrice} MXN
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-stone-600 dark:text-stone-300">
-                    Envío
-                  </span>
-                  <span className="font-medium dark:text-white">$150 MXN</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-stone-600 dark:text-stone-300">
-                    Impuestos
-                  </span>
-                  <span className="font-medium dark:text-white">
-                    ${Math.round(totalPrice * 0.16)} MXN
-                  </span>
-                </div>
                 <div className="border-t dark:border-stone-700 pt-4 flex justify-between">
                   <span className="font-bold dark:text-white">Total</span>
                   <span className="font-bold dark:text-white">
-                    ${totalPrice + 150 + Math.round(totalPrice * 0.16)} MXN
+                    ${totalPrice} MXN
                   </span>
                 </div>
               </div>
