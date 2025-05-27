@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { mainNavItems } from "@/data/navigation";
@@ -8,20 +8,21 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, Menu, X } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { cn } from "@/lib/utils";
-import { useCart } from "@/lib/cart-context";
+import { useCartStore } from "@/hooks/use-cart-store";
 import { useUserAuthStore } from "@/hooks/use-user-auth-store";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const router = useRouter();
-  const { cartItems } = useCart();
+  const { items, fetchCart } = useCartStore();
   const { token, isAdmin, logout, setTokenFromStorage, user } =
     useUserAuthStore();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-
-  const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const [animateCart, setAnimateCart] = useState(false);
+  const itemCount = items.reduce((total, item) => total + item.quantity, 0);
+  const prevItemCount = useRef(itemCount);
 
   const handleDropdownToggle = (title: string) => {
     setActiveDropdown((prev) => (prev === title ? null : title));
@@ -38,6 +39,22 @@ export function SiteHeader() {
   useEffect(() => {
     setTokenFromStorage();
   }, [setTokenFromStorage]);
+
+  // Sincronizar carrito al iniciar sesión o si hay token y el store está vacío
+  useEffect(() => {
+    if (token && items.length === 0) {
+      fetchCart();
+    }
+  }, [token, items.length, fetchCart]);
+
+  useEffect(() => {
+    if (prevItemCount.current !== itemCount) {
+      setAnimateCart(true);
+      const timeout = setTimeout(() => setAnimateCart(false), 300);
+      prevItemCount.current = itemCount;
+      return () => clearTimeout(timeout);
+    }
+  }, [itemCount]);
 
   const renderNavItems = () =>
     mainNavItems.map((item) => {
@@ -208,7 +225,13 @@ export function SiteHeader() {
                 aria-label="Carrito de compras"
               >
                 <ShoppingCart className="h-5 w-5" />
-                <span className="absolute right-0 top-0 h-4 w-4 rounded-full bg-amber-600 text-[10px] font-bold text-white flex items-center justify-center">
+                <span
+                  className={cn(
+                    "absolute right-0 top-0 h-4 w-4 rounded-full bg-amber-600 text-[10px] font-bold text-white flex items-center justify-center transition-transform",
+                    animateCart && "scale-125 animate-bounce"
+                  )}
+                  style={{ transition: 'transform 0.3s' }}
+                >
                   {itemCount}
                 </span>
               </Button>

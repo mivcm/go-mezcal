@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import api from "@/lib/axios";
 import { useUserAuthStore } from "@/hooks/use-user-auth-store";
 
 const CATEGORIES = [
@@ -26,7 +26,7 @@ export default function ProductEditForm({ productId }: Props) {
   const { token } = useUserAuthStore();
   const router = useRouter();
 
-  const fetcher = (url: string) => axios.get(url, { headers: { Authorization: `Bearer ${token}` } }).then(res => res.data);
+  const fetcher = (url: string) => api.get(url).then(res => res.data);
   const { data: product, isLoading } = useSWR(productId ? `http://localhost:3001/api/v1/products/${productId}` : null, fetcher);
 
   const [form, setForm] = useState<any>(null);
@@ -37,13 +37,13 @@ export default function ProductEditForm({ productId }: Props) {
 
   useEffect(() => {
     if (product) {
-      console.log(product);
       
       setForm({
         name: product.name || "",
         slug: product.slug || "",
         category: product.category || "joven",
         price: product.price || "",
+        stock: product.stock || "",
         images: [],
         description: product.description || "",
         short_description: product.short_description || "",
@@ -102,9 +102,8 @@ export default function ProductEditForm({ productId }: Props) {
           formData.append(`product[${key}]`, value as string);
         }
       });
-      await axios.patch(`http://localhost:3001/api/v1/products/${productId}`, formData, {
+      await api.patch(`/api/v1/products/${productId}`, formData, {
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
@@ -152,6 +151,11 @@ export default function ProductEditForm({ productId }: Props) {
         <div>
           <label className="block font-medium mb-1">Precio</label>
           <Input name="price" type="number" value={form.price} onChange={handleChange} required />
+        </div>
+        {/* Stock */}
+        <div>
+          <label className="block font-medium mb-1">Stock</label>
+          <Input name="stock" type="number" value={form.stock} onChange={handleChange} required />
         </div>
         {/* Imágenes */}
         <div>

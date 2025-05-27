@@ -1,21 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Trash2, ShoppingBag, ArrowLeft, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useCart } from "@/lib/cart-context";
 import { useToast } from "@/hooks/use-toast";
 import { useUserAuthStore } from "@/hooks/use-user-auth-store";
+import { useCartStore } from "@/hooks/use-cart-store";
 
 export default function CartPage() {
-  const { cartItems, removeFromCart, updateQuantity, totalPrice, clearCart } =
-    useCart();
-  const { toast } = useToast();
   const { token, user } = useUserAuthStore();
+  const { toast } = useToast();
   const [couponCode, setCouponCode] = useState("");
+  const { items, status, fetchCart, addItem, removeItem, clear, abandonCart, convertToOrder } = useCartStore();
+
+  // Sincronizar carrito al cargar si hay token
+  useEffect(() => {
+    if (token) fetchCart();
+  }, [token, fetchCart]);
 
   const handleCheckout = async () => {
     if (!token) {
@@ -23,38 +27,18 @@ export default function CartPage() {
       return;
     }
     try {
-      const items = cartItems.map((item) => ({
-        product_id: item.id,
-        quantity: item.quantity,
-      }));
-      const total = totalPrice; // Solo productos, sin envío ni impuestos
-      const res = await fetch("http://localhost:3001/api/v1/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          total,
-          items,
-          success_url: window.location.origin + "/orders",
-          cancel_url: window.location.origin + "/carrito",
-        }),
-      });
-      if (!res.ok) throw new Error("Error al procesar el pago");
-      const data = await res.json();
-      clearCart(); // Limpiar el carrito después de una compra exitosa
+      const data = await convertToOrder();
+      clear();
       window.location.href = data.checkout_url;
     } catch (err: any) {
       toast({
         title: "Error",
-        description:
-          err.message || "No se pudo procesar el pago",
+        description: err.message || "No se pudo procesar el pago",
       });
     }
   };
 
-  if (cartItems.length === 0) {
+  if (items.length === 0) {
     return (
       <div className="py-20 bg-stone-50 dark:bg-stone-900 min-h-screen">
         <div className="container mx-auto px-4 max-w-4xl">
@@ -98,12 +82,12 @@ export default function CartPage() {
             <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md overflow-hidden">
               <div className="p-6 border-b dark:border-stone-700">
                 <h2 className="text-xl font-semibold dark:text-white">
-                  Productos ({cartItems.length})
+                  Productos ({items.length})
                 </h2>
               </div>
 
               <div className="divide-y dark:divide-stone-700">
-                {cartItems.map((item) => (
+                {items.map((item) => (
                   <div
                     key={item.id}
                     className="p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4"
@@ -118,42 +102,48 @@ export default function CartPage() {
                     </div>
 
                     <div className="flex-1">
-                      <h3 className="font-medium dark:text-white">
-                        {item.name}
-                      </h3>
+                      <h3 className="font-medium dark:text-white">{item.name}</h3>
                       <p className="text-amber-600 dark:text-amber-500 font-bold">
                         ${item.price} MXN
                       </p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className="h-7 w-7"
+                          onClick={() => item.quantity > 1 && addItem({ ...item, quantity: -1 })}
+                          disabled={item.quantity <= 1}
+                        >
+                          -
+                        </Button>
+                        <span className="px-2 font-semibold text-lg">{item.quantity}</span>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className="h-7 w-7"
+                          onClick={() => {
+                            const maxStock = item.stock ?? 99;
+                            if (item.quantity < maxStock) {
+                              addItem({ ...item, quantity: 1 });
+                            } else {
+                              toast({
+                                title: "Stock insuficiente",
+                                description: `Solo hay ${maxStock} unidades disponibles de este producto.`,
+                                variant: "destructive",
+                              });
+                            }
+                          }}
+                          disabled={item.quantity >= (item.stock ?? 99)}
+                        >
+                          +
+                        </Button>
+                        <span className="text-xs text-muted-foreground ml-2">Stock: {item.stock ?? '∞'}</span>
+                      </div>
                     </div>
 
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={() =>
-                          updateQuantity(item.id, item.quantity - 1)
-                        }
-                        className="w-8 h-8 flex items-center justify-center border dark:border-stone-600 rounded-md dark:text-white"
-                      >
-                        -
-                      </button>
-                      <span className="w-8 text-center dark:text-white">
-                        {item.quantity}
-                      </span>
-                      <button
-                        onClick={() =>
-                          updateQuantity(item.id, item.quantity + 1)
-                        }
-                        className="w-8 h-8 flex items-center justify-center border dark:border-stone-600 rounded-md dark:text-white"
-                      >
-                        +
-                      </button>
-                    </div>
-
-                    <div className="text-right">
-                      <p className="font-bold dark:text-white">
-                        ${item.price * item.quantity} MXN
-                      </p>
-                      <button
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeItem(item.id)}
                         className="text-red-500 dark:text-red-400 flex items-center mt-2 text-sm"
                       >
                         <Trash2 className="h-4 w-4 mr-1" /> Eliminar
@@ -182,23 +172,37 @@ export default function CartPage() {
               </h2>
 
               <div className="space-y-4 mb-6">
+                {/* Desglose de productos */}
+                <div className="mb-4">
+                  <h3 className="text-sm font-semibold mb-2 text-stone-600 dark:text-stone-300">Productos</h3>
+                  <ul className="divide-y dark:divide-stone-700">
+                    {items.map((item) => (
+                      <li key={item.id} className="py-2 flex justify-between items-center text-sm">
+                        <span className="flex-1 truncate">{item.name} <span className="text-xs text-muted-foreground">x{item.quantity}</span></span>
+                        <span className="mx-2 text-xs text-muted-foreground">${item.price} c/u</span>
+                        <span className="font-medium">${item.price * item.quantity}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {/* Subtotal y total */}
                 <div className="flex justify-between">
                   <span className="text-stone-600 dark:text-stone-300">
                     Subtotal
                   </span>
                   <span className="font-medium dark:text-white">
-                    ${totalPrice} MXN
+                    ${items.reduce((total, item) => total + item.price * item.quantity, 0)} MXN
                   </span>
                 </div>
                 <div className="border-t dark:border-stone-700 pt-4 flex justify-between">
                   <span className="font-bold dark:text-white">Total</span>
                   <span className="font-bold dark:text-white">
-                    ${totalPrice} MXN
+                    ${items.reduce((total, item) => total + item.price * item.quantity, 0)} MXN
                   </span>
                 </div>
               </div>
 
-              <div className="mb-6">
+              {/* <div className="mb-6">
                 <div className="flex gap-2">
                   <Input
                     type="text"
@@ -214,7 +218,7 @@ export default function CartPage() {
                     Aplicar
                   </Button>
                 </div>
-              </div>
+              </div> */}
 
               <Button
                 onClick={handleCheckout}

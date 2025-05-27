@@ -6,15 +6,30 @@ import Image from "next/image";
 import { ArrowLeft, Calendar, User, Share2, Facebook, Twitter, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BlogCard } from "@/components/blog-card";
-import { getPostBySlug, getRecentPosts } from "@/data/blog-posts";
+import { useEffect, useState } from "react";
+import { useBlogStore } from "@/hooks/use-blog-store";
 import { formatDate } from "@/lib/utils";
+import type { BlogPost } from "@/types";
 
 export default function BlogPostPage() {
   const params = useParams();
   const slug = params.slug as string;
-  const post = getPostBySlug(slug);
-  const recentPosts = getRecentPosts(2);
+  const { getBlogBySlug, blogs, loading, error } = useBlogStore();
+  const [post, setPost] = useState<BlogPost | null>(null);
 
+  useEffect(() => {
+    getBlogBySlug(slug).then(setPost);
+  }, [slug, getBlogBySlug]);
+
+  // Artículos relacionados: los más recientes excepto el actual
+  const recentPosts = blogs.filter((b) => b.slug !== slug).slice(0, 2);
+
+  if (loading) {
+    return <div className="container py-16 text-center">Cargando artículo...</div>;
+  }
+  if (error) {
+    return <div className="container py-16 text-center text-red-600">{error}</div>;
+  }
   if (!post) {
     return (
       <div className="container py-16 text-center">
@@ -86,7 +101,8 @@ export default function BlogPostPage() {
               {post.content.split('\n').map((paragraph, index) => {
                 // Check if paragraph is a heading
                 if (paragraph.startsWith('#')) {
-                  const level = paragraph.match(/^#+/)[0].length;
+                  const match = paragraph.match(/^#+/);
+                  const level = match ? match[0].length : 1;
                   const content = paragraph.replace(/^#+\s+/, '');
                   
                   switch (level) {
@@ -194,7 +210,8 @@ export default function BlogPostPage() {
               <h3 className="text-lg font-bold mb-4">Contenido</h3>
               <nav className="space-y-2">
                 {post.content.split('\n').filter(p => p.startsWith('#')).map((heading, index) => {
-                  const level = heading.match(/^#+/)[0].length;
+                  const match = heading.match(/^#+/);
+                  const level = match ? match[0].length : 1;
                   const content = heading.replace(/^#+\s+/, '');
                   
                   return (

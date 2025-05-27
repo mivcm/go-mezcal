@@ -16,6 +16,7 @@ export type Product = {
   rating: number;
   reviews: Review[];
   relatedProducts?: string[];
+  stock: number; // Stock disponible
 };
 
 export type Review = {

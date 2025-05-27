@@ -36,7 +36,7 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
         ))}
       </div>
       <div className="order-1 md:order-2 md:col-span-4 relative rounded-lg overflow-hidden bg-muted">
-        <div className="relative w-full aspect-square md:aspect-[3/3.6] h-auto md:h-[400px]">
+        <div className="relative w-full aspect-square md:aspect-[3/3] h-auto md:h-[400px]">
           <Image
             src={images[selectedImage]}
             alt={`${name} - Imagen principal`}

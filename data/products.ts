@@ -46,6 +46,7 @@ export const products: Product[] = [
       },
     ],
     relatedProducts: ["2", "4", "6"],
+    stock: 10, // Stock inicial de ejemplo
   },
   {
     id: "2",
@@ -81,6 +82,7 @@ export const products: Product[] = [
       },
     ],
     relatedProducts: ["3", "5", "8"],
+    stock: 10, // Stock inicial de ejemplo
   },
   {
     id: "3",
@@ -116,6 +118,7 @@ export const products: Product[] = [
       },
     ],
     relatedProducts: ["1", "4", "7"],
+    stock: 10, // Stock inicial de ejemplo
   },
   {
     id: "4",
@@ -151,6 +154,7 @@ export const products: Product[] = [
       },
     ],
     relatedProducts: ["3", "6", "8"],
+    stock: 10, // Stock inicial de ejemplo
   },
   {
     id: "5",
@@ -186,6 +190,7 @@ export const products: Product[] = [
       },
     ],
     relatedProducts: ["1", "2", "7"],
+    stock: 10, // Stock inicial de ejemplo
   },
   {
     id: "6",
@@ -221,6 +226,7 @@ export const products: Product[] = [
       },
     ],
     relatedProducts: ["1", "5", "8"],
+    stock: 10, // Stock inicial de ejemplo
   },
   {
     id: "7",
@@ -257,6 +263,7 @@ export const products: Product[] = [
       },
     ],
     relatedProducts: ["2", "5", "6"],
+    stock: 10, // Stock inicial de ejemplo
   },
   {
     id: "8",
@@ -292,6 +299,7 @@ export const products: Product[] = [
       },
     ],
     relatedProducts: ["2", "4", "7"],
+    stock: 10, // Stock inicial de ejemplo
   },
 ];
 

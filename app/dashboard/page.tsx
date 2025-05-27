@@ -1,9 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useUserAuthStore } from "@/hooks/use-user-auth-store";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
   const { token } = useUserAuthStore();
+  const router = useRouter();
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background">
       <div className="bg-white dark:bg-zinc-900 p-8 rounded shadow-md w-full max-w-2xl">
@@ -16,6 +20,12 @@ export default function DashboardPage() {
             </Link>
             <Link href="/dashboard/orders">
               <span className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition">Ver órdenes</span>
+            </Link>
+            <Link href="/dashboard/carts">
+              <span className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition">Carritos abandonados</span>
+            </Link>
+            <Link href="/dashboard/stats">
+              <span className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded transition">Estadísticas</span>
             </Link>
           </div>
         )}

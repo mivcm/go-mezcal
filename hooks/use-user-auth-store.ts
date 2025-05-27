@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axios from "axios";
+import api from "@/lib/axios";
 
 interface UserAuthState {
   token: string | null;
@@ -21,13 +21,11 @@ export const useUserAuthStore = create<UserAuthState>((set) => ({
   login: async (email, password) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post("http://localhost:3001/api/v1/login", { email, password });
+      const res = await api.post("/api/v1/login", { email, password });
       set({ token: res.data.token, loading: false, error: null });
       localStorage.setItem("user_token", res.data.token);
       // Obtener datos del usuario con el token
-      const me = await axios.get("http://localhost:3001/api/v1/me", {
-        headers: { Authorization: `Bearer ${res.data.token}` },
-      });
+      const me = await api.get("/api/v1/me");
       set({ user: me.data.user, isAdmin: !!me.data.user.admin });
       localStorage.setItem("user_is_admin", me.data.user.admin ? "1" : "0");
       localStorage.setItem("user_email", me.data.user.email);
@@ -45,9 +43,7 @@ export const useUserAuthStore = create<UserAuthState>((set) => ({
     const token = localStorage.getItem("user_token");
     if (token) {
       try {
-        const me = await axios.get("http://localhost:3001/api/v1/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const me = await api.get("/api/v1/me");
         set({ token, user: me.data.user, isAdmin: !!me.data.user.admin });
       } catch {
         set({ token: null, user: null, isAdmin: false });

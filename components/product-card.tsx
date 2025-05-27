@@ -48,14 +48,17 @@ export function ProductCard({ product, className }: ProductCardProps) {
         <h3 className="text-lg font-semibold">
           {product.name}
         </h3>
-        <div className="flex items-center justify-between mt-1">
-          <p className="font-medium text-lg text-amber-600 dark:text-amber-500">
+        <div className="flex items-center gap-2 mt-1">
+          <span className="font-medium text-lg text-amber-600 dark:text-amber-500">
             {formatPrice(product.price)}
-          </p>
-          <div className="flex items-center">
-            <span className="text-yellow-500">★</span>
-            <span className="ml-1 text-sm font-medium">{product.rating}</span>
-          </div>
+          </span>
+          {product.stock === 0 && (
+            <span className="ml-2 text-xs font-bold text-red-600 bg-red-100 rounded px-2 py-1">Agotado</span>
+          )}
+        </div>
+        <div className="flex items-center">
+          <span className="text-yellow-500">★</span>
+          <span className="ml-1 text-sm font-medium">{product.rating}</span>
         </div>
       </div>
     </Link>

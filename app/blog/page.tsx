@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { blogPosts, getAllCategories, getFeaturedPosts, getPostsByCategory } from "@/data/blog-posts";
+import { useEffect } from "react";
+import { useBlogStore } from "@/hooks/use-blog-store";
 import { BlogCard } from "@/components/blog-card";
 
 export const metadata: Metadata = {
@@ -14,9 +15,26 @@ export default function BlogPage({
   searchParams: { categoria?: string } 
 }) {
   const category = searchParams.categoria;
-  const featuredPosts = getFeaturedPosts();
-  const posts = category ? getPostsByCategory(category) : blogPosts;
-  const categories = getAllCategories();
+  const { blogs, loading, error, fetchBlogs } = useBlogStore();
+
+  useEffect(() => {
+    fetchBlogs();
+  }, [fetchBlogs]);
+
+  // Filtrado por categoría si se desea
+  const posts = category ? blogs.filter((b) => b.category === category) : blogs;
+  const featuredPosts = posts.filter((b) => b.featured);
+  // Para categorías únicas y su conteo
+  const categories = Array.from(
+    blogs.reduce((acc, b) => {
+      acc.set(b.category, (acc.get(b.category) || 0) + 1);
+      return acc;
+    }, new Map()),
+  ).map(([name, count]) => ({ name, count }));
+
+  // Muestra loading y error
+  if (loading) return <div className="container py-12 text-center">Cargando blogs...</div>;
+  if (error) return <div className="container py-12 text-center text-red-600">{error}</div>;
 
   return (
     <div className="container py-12">

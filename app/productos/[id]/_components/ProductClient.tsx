@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge-special";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProductGallery } from "@/components/product-gallery";
 import Actions from "./Actions";
+import api from "@/lib/axios";
 
 const categories = [
 	{ id: "joven", name: "Joven" },
@@ -37,23 +38,14 @@ export default function ProductClient({ product }: Props) {
 		setReviewError(null);
 		setReviewSuccess(false);
 		try {
-			const res = await fetch(
-				`http://localhost:3001/api/v1/products/${product.id}/reviews`,
+			const { data: newReview } = await api.post(
+				`api/v1/products/${product.id}/reviews`,
 				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${userToken}`,
-					},
-					body: JSON.stringify({
-						...reviewForm,
-						user_name: user?.email || "",
-						date: new Date().toISOString().slice(0, 10),
-					}),
+					...reviewForm,
+					user_name: user?.email || "",
+					date: new Date().toISOString().slice(0, 10),
 				}
 			);
-			if (!res.ok) throw new Error("Error al enviar reseña");
-			const newReview = await res.json();
 			setReviews([newReview, ...reviews]);
 			setReviewSuccess(true);
 			setReviewForm({ rating: 0, comment: "" });
@@ -73,8 +65,6 @@ export default function ProductClient({ product }: Props) {
 			day: "numeric",
 		});
 	}
-
-	console.log(product);
 
 	return (
 		<div className="container py-12">
@@ -147,6 +137,10 @@ export default function ProductClient({ product }: Props) {
 						<div className="flex items-center">
 							<span className="w-32 font-medium">Agave:</span>
 							<span>{product.ingredients?.join(", ")}</span>
+						</div>
+						<div className="flex items-center mb-2">
+							<span className="w-32 font-medium">Stock disponible:</span>
+							<span>{product.stock > 0 ? product.stock : "Agotado"}</span>
 						</div>
 					</div>
 

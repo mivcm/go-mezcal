@@ -8,6 +8,7 @@ export type CartItem = {
   price: number
   image: string
   quantity: number
+  stock?: number // Stock disponible para validación
 }
 
 type CartContextType = {
@@ -48,7 +49,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addToCart = (item: CartItem) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((i) => i.id === item.id)
-
+      // Validar stock antes de agregar
+      const maxStock = item.stock ?? 99;
+      const currentQty = existingItem ? existingItem.quantity : 0;
+      if (currentQty + item.quantity > maxStock) {
+        alert("No puedes agregar más de la cantidad disponible en stock.");
+        return prevItems;
+      }
       if (existingItem) {
         return prevItems.map((i) => (i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i))
       } else {

@@ -3,7 +3,8 @@ import { useState } from "react";
 import { QuantityInput } from "@/components/quantity-input";
 import { Button } from "@/components/ui/button";
 import { Share2, Heart, ShoppingCart } from "lucide-react";
-import { useCart } from "@/lib/cart-context";
+import { useCartStore } from "@/hooks/use-cart-store";
+import { useUserAuthStore } from "@/hooks/use-user-auth-store";
 import { Product } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 type Props = {
@@ -12,7 +13,8 @@ type Props = {
 
 const Actions = (props: Props) => {
   const { product } = props;
-  const { addToCart } = useCart();
+  const { token } = useUserAuthStore();
+  const { addItem } = useCartStore();
   const { toast } = useToast();
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -24,32 +26,77 @@ const Actions = (props: Props) => {
         <QuantityInput
           initialValue={quantity}
           min={1}
-          max={10}
+          max={product.stock}
           onChange={setQuantity}
+          disabled={product.stock === 0}
         />
       </div>
       <div className="flex flex-wrap gap-4">
         <Button
           className="flex-1 md:flex-none bg-amber-600 hover:bg-amber-700"
           size="lg"
-          onClick={() => {
-            addToCart({
-              id: product.id,
-              name: product.name,
-              price: product.price,
-              image: product.images[0],
-              quantity,
-            });
-            toast({
-              title: "Producto añadido",
-              description: `${product.name} se ha añadido a tu carrito.`,
-            });
+          onClick={async () => {
+            if (!token) {
+              toast({ title: "Debes iniciar sesión para comprar." });
+              return;
+            }
+            try {
+              await addItem({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.images[0],
+                quantity,
+                stock: product.stock,
+              });
+              toast({
+                title: "Producto añadido",
+                description: `${product.name} se ha añadido a tu carrito.`,
+              });
+            } catch (err: any) {
+              toast({
+                title: "Error",
+                description: err.message || "No se pudo añadir al carrito",
+                variant: "destructive",
+              });
+            }
           }}
+          disabled={product.stock === 0 || quantity > product.stock}
         >
           <ShoppingCart className="h-5 w-5 mr-2" />
-          Añadir al carrito
+          {product.stock === 0 ? "Agotado" : "Añadir al carrito"}
         </Button>
-        <Button variant="secondary" size="lg" className="flex-1 md:flex-none">
+        <Button
+          variant="secondary"
+          size="lg"
+          className="flex-1 md:flex-none"
+          onClick={async () => {
+            if (!token) {
+              toast({ title: "Debes iniciar sesión para comprar." });
+              return;
+            }
+            try {
+              await addItem({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.images[0],
+                quantity,
+                stock: product.stock,
+              });
+              // Checkout directo
+              const data = await useCartStore.getState().convertToOrder();
+              window.location.href = data.checkout_url;
+            } catch (err: any) {
+              toast({
+                title: "Error",
+                description: err.message || "No se pudo procesar el pago",
+                variant: "destructive",
+              });
+            }
+          }}
+          disabled={product.stock === 0 || quantity > product.stock}
+        >
           Comprar ahora
         </Button>
         <Button

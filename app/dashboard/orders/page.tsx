@@ -44,29 +44,30 @@ export default function AdminOrdersPage() {
       <div className="container py-16 text-center text-red-500">{error}</div>
     );
 
-  console.log(orders);
-
   return (
     <div className="container py-12 max-w-5xl">
       <h1 className="text-2xl font-bold mb-8">Órdenes (Admin)</h1>
       <div className="flex gap-4 mb-8">
-        {/* <Button
-          variant="outline"
-          onClick={() => router.push("/dashboard/users")}
-        >
-          Gestionar Usuarios
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => router.push("/dashboard/transactions")}
-        >
-          Ver Transacciones
-        </Button> */}
         <Button
           variant="outline"
           onClick={() => router.push("/dashboard/products")}
         >
           Ver productos
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => router.push("/dashboard/carts")}
+        >
+          Ver carritos abandonados
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => router.push("/dashboard/stats")}
+        >
+          Ver estadísticas
+        </Button>
+        <Button variant="outline" onClick={() => router.push("/dashboard")}>
+          Dashboard
         </Button>
       </div>
       {orders.length === 0 ? (
