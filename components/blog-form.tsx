@@ -36,7 +36,7 @@ export function BlogForm({ initialData = {}, onSuccess, isEdit = false }: BlogFo
   })
 
   const [coverImage, setCoverImage] = useState<File | null>(null)
-  const [preview, setPreview] = useState<string | null>(initialData.coverImage || null)
+  const [preview, setPreview] = useState<string | null>(initialData.cover_image || null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
