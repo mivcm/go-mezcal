@@ -58,45 +58,12 @@ export const footerLinks: FooterLink[] = [
         href: "/nosotros",
       },
       {
-        label: "Nuestro Compromiso",
-        href: "/nosotros#compromiso",
-      },
-      {
-        label: "Productores",
-        href: "/productores",
-      },
-      {
         label: "Blog",
         href: "/blog",
       },
       {
         label: "Contacto",
         href: "/contacto",
-      },
-    ],
-  },
-  {
-    title: "Soporte",
-    items: [
-      {
-        label: "Preguntas Frecuentes",
-        href: "/faq",
-      },
-      {
-        label: "Envíos",
-        href: "/envios",
-      },
-      {
-        label: "Devoluciones",
-        href: "/devoluciones",
-      },
-      {
-        label: "Términos y Condiciones",
-        href: "/terminos",
-      },
-      {
-        label: "Política de Privacidad",
-        href: "/privacidad",
       },
     ],
   },

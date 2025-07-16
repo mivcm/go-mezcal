@@ -1,5 +1,9 @@
-import { Product } from "@/types";
+"use client"
+import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import api from "@/lib/axios";
+import { Product } from "@/types";
 
 const ProductClient = dynamic(() => import("./_components/ProductClient"), { ssr: false });
 
@@ -9,32 +13,17 @@ type PageProps = {
   };
 };
 
-export async function generateStaticParams() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/v1/products`);
-  
-  if (!res.ok) {
-    return [];
-  }
 
-  const products: Product[] = await res.json();
-
-  return products.map((product) => ({
-    id: product.id.toString(),
-  }));
-}
-
-export default async function ProductPage({ params }: PageProps) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/v1/products/${params.id}`);
-
-  if (!res.ok) {
-    return (
-      <div className="container py-16 text-center text-red-500">
-        Producto no encontrado
-      </div>
-    );
-  }
-
-  const product: Product = await res.json();
-
+export default function ProductPage() {
+  const { id } = useParams();
+  const [product, setProduct] = useState<Product | null>(null);
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const res = await api.get(`/api/v1/products/${id}`);
+      setProduct(res.data);
+    };
+    fetchProduct();
+  }, [id]);
+  if (!product) return <div>Loading...</div>;
   return <ProductClient product={product} />;
 }

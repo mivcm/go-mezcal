@@ -30,7 +30,9 @@ export const useUserAuthStore = create<UserAuthState>((set) => ({
       localStorage.setItem("user_is_admin", me.data.user.admin ? "1" : "0");
       localStorage.setItem("user_email", me.data.user.email);
     } catch (err: any) {
-      set({ error: err.response?.data?.message || "Error de autenticación", loading: false });
+      console.log(err);
+      
+      set({ error: err.response?.data.error || "Error de autenticación", loading: false });
     }
   },
   logout: () => {

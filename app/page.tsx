@@ -1,56 +1,20 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ProductList } from "@/components/product-list";
-import { BlogCard } from "@/components/blog-card";
-import { TestimonialCard } from "@/components/testimonial-card";
-import { getFeaturedProducts } from "@/data/products";
-import { getFeaturedPosts, getRecentPosts } from "@/data/blog-posts";
-import { getTestimonials } from "@/data/testimonials";
 import HeroSection from "@/components/hero-section";
 import FeaturedProducts from "@/components/featured-products";
+import AboutUs from "@/components/about-us";
 
 export default function Home() {
-  const featuredPosts = getFeaturedPosts();
-  const recentPosts = getRecentPosts(3);
-  const testimonials = getTestimonials();
-
   return (
     <div>
       {/* Hero Section */}
-      <HeroSection/>
+      <HeroSection />
 
       {/* Featured Products */}
-      <FeaturedProducts/>
+      <FeaturedProducts />
 
       {/* About Us */}
-      <section className="py-16 bg-white dark:bg-stone-900">
-        <div className="container">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative aspect-square md:aspect-auto rounded-lg overflow-hidden">
-              <Image
-                src="https://images.pexels.com/photos/1209037/pexels-photo-1209037.jpeg"
-                alt="Maestro mezcalero"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <h2 className="text-3xl font-bold mb-6">Nuestra Filosofía</h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                En Go.mezcal, creemos que cada botella cuenta una historia. Trabajamos directamente con familias productoras que han perfeccionado el arte del mezcal durante generaciones, preservando técnicas ancestrales y el profundo respeto por el agave.
-              </p>
-              <p className="text-lg text-muted-foreground mb-8">
-                Nos comprometemos con la sostenibilidad ambiental y el comercio justo, asegurando que nuestros maestros mezcaleros reciban una compensación justa por su extraordinario trabajo y conocimiento.
-              </p>
-              <Button asChild className="bg-amber-600 hover:bg-amber-700">
-                <Link href="/nosotros">Conoce Más Sobre Nosotros</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <AboutUs />
       {/* Production Process */}
       <section className="py-16 bg-amber-900 text-white">
         <div className="container">
@@ -95,49 +59,6 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="text-center mt-12">
-            <Button asChild variant="outline" className="border-white text-white hover:bg-white hover:text-amber-900">
-              <Link href="/proceso">Descubre Todo el Proceso</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-16 bg-white dark:bg-stone-900">
-        <div className="container">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Lo Que Dicen Nuestros Clientes
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {testimonials.map((testimonial) => (
-              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Preview */}
-      <section className="py-16 bg-amber-50/50 dark:bg-stone-900">
-        <div className="container">
-          <div className="flex flex-col sm:flex-row justify-between items-baseline mb-8">
-            <h2 className="text-3xl font-bold">De Nuestro Blog</h2>
-            <Link href="/blog" className="text-amber-600 hover:text-amber-700 font-medium">
-              Ver todos los artículos
-            </Link>
-          </div>
-          
-          {featuredPosts.length > 0 && (
-            <div className="mb-12">
-              <BlogCard post={featuredPosts[0]} featured />
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {recentPosts.map((post) => (
-              <BlogCard key={post.id} post={post} />
-            ))}
-          </div>
         </div>
       </section>
 
@@ -150,7 +71,7 @@ export default function Home() {
           <p className="text-xl text-amber-100 mb-8 max-w-2xl mx-auto">
             Explora nuestra selección de mezcales artesanales y encuentra el que mejor se adapta a tu paladar.
           </p>
-          <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-amber-600">
+          <Button asChild size="lg" variant="outline" className="border-white text-black hover:bg-white hover:text-amber-600 dark:text-white dark:hover:text-amber-600">
             <Link href="/productos">Explorar Productos</Link>
           </Button>
         </div>

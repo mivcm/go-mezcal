@@ -47,39 +47,6 @@ export function SiteFooter() {
             ))}
           </div>
         </div>
-        <div className="mt-10 border-t pt-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <div className="space-y-4">
-              <h3 className="text-base font-medium">Suscríbete a nuestro newsletter</h3>
-              <p className="text-sm text-muted-foreground max-w-md">
-                Recibe novedades, lanzamientos exclusivos y artículos sobre el mundo del mezcal.
-              </p>
-              <div className="flex max-w-md gap-2">
-                <Input 
-                  type="email" 
-                  placeholder="Tu correo electrónico" 
-                  className="max-w-md"
-                />
-                <Button type="submit" className="bg-amber-600 hover:bg-amber-700">
-                  Suscribirse
-                </Button>
-              </div>
-            </div>
-            <div className="flex flex-col items-start lg:items-end justify-end">
-              <p className="text-sm text-muted-foreground">
-                &copy; {new Date().getFullYear()} Go.mezcal. Todos los derechos reservados.
-              </p>
-              <div className="mt-2 flex space-x-4 text-sm text-muted-foreground">
-                <Link href="/terminos" className="hover:text-foreground">
-                  Términos de Servicio
-                </Link>
-                <Link href="/privacidad" className="hover:text-foreground">
-                  Política de Privacidad
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </footer>
   );

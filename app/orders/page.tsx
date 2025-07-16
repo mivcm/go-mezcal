@@ -247,7 +247,7 @@ export default function OrdersPage() {
               : "Intenta ajustar los filtros de búsqueda."}
           </p>
           {orders.length === 0 && (
-            <Button onClick={() => router.push("/products")}>
+            <Button onClick={() => router.push("/productos")}>
               <ShoppingBag className="h-4 w-4 mr-2" />
               Explorar productos
             </Button>

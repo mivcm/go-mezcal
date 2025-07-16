@@ -17,7 +17,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
       >
         <div className="relative aspect-video md:aspect-auto overflow-hidden rounded-lg">
           <Image
-            src={post.coverImage}
+            src={post.cover_image}
             alt={post.title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -39,19 +39,21 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
           <p className="text-muted-foreground mb-4 line-clamp-3">
             {post.excerpt}
           </p>
-          <div className="flex items-center">
-            <div className="relative w-8 h-8 rounded-full overflow-hidden mr-3">
-              <Image
-                src={post.author.image}
-                alt={post.author.name}
-                fill
-                className="object-cover"
-              />
+          {post.author && (
+            <div className="flex items-center">
+              <div className="relative w-8 h-8 rounded-full overflow-hidden mr-3">
+                <Image
+                  src={post.author.image}
+                  alt={post.author.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <span className="text-sm font-medium">
+                {post.author.name}
+              </span>
             </div>
-            <span className="text-sm font-medium">
-              {post.author.name}
-            </span>
-          </div>
+          )}
         </div>
       </Link>
     );
@@ -64,7 +66,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
     >
       <div className="relative aspect-video overflow-hidden">
         <Image
-          src={post.coverImage}
+          src={post.cover_image}
           alt={post.title}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -85,19 +87,21 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
         <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
           {post.excerpt}
         </p>
-        <div className="flex items-center mt-auto pt-2 border-t">
-          <div className="relative w-6 h-6 rounded-full overflow-hidden mr-2">
-            <Image
-              src={post.author.image}
-              alt={post.author.name}
-              fill
-              className="object-cover"
-            />
+        {post.author && (
+          <div className="flex items-center mt-auto pt-2 border-t">
+            <div className="relative w-6 h-6 rounded-full overflow-hidden mr-2">
+              <Image
+                src={post.author.image}
+                alt={post.author.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <span className="text-xs font-medium">
+              {post.author.name}
+            </span>
           </div>
-          <span className="text-xs font-medium">
-            {post.author.name}
-          </span>
-        </div>
+        )}
       </div>
     </Link>
   );

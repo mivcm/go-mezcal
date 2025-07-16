@@ -5,6 +5,8 @@ import { Card } from "@/components/ui/card";
 import api from "@/lib/axios";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { BackButton } from "@/components/ui/back-button";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function AdminStatsPage() {
   const { token, isAdmin } = useUserAuthStore();
@@ -42,50 +44,11 @@ export default function AdminStatsPage() {
   if (loading) return <div className="container py-16 text-center">Cargando estadísticas...</div>;
   if (error) return <div className="container py-16 text-center text-red-500">{error}</div>;
 
-  console.log(abandoned);
-  
-
 
   return (
     <div className="container py-12 max-w-4xl">
+      <BackButton />
       <h1 className="text-2xl font-bold mb-8">Estadísticas de la tienda</h1>
-      <div className="flex flex-wrap gap-2 md:gap-4 mb-8">
-        <Button
-          variant="outline"
-          className="flex-1 min-w-[140px]"
-          onClick={() => router.push("/dashboard/products")}
-        >
-          Ver productos
-        </Button>
-        <Button
-          variant="outline"
-          className="flex-1 min-w-[140px]"
-          onClick={() => router.push("/dashboard/orders")}
-        >
-          Ver órdenes
-        </Button>
-        <Button
-          variant="outline"
-          className="flex-1 min-w-[140px]"
-          onClick={() => router.push("/dashboard/carts")}
-        >
-          Ver carritos abandonados
-        </Button>
-        <Button
-          variant="outline"
-          className="flex-1 min-w-[140px]"
-          onClick={() => router.push("/dashboard/stats")}
-        >
-          Ver estadísticas
-        </Button>
-        <Button
-          variant="outline"
-          className="flex-1 min-w-[140px]"
-          onClick={() => router.push("/dashboard")}
-        >
-          Dashboard
-        </Button>
-      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <Card className="p-6 flex flex-col items-center justify-center bg-gradient-to-br from-amber-100 to-amber-300 dark:from-zinc-800 dark:to-zinc-900 shadow-lg">
           <h2 className="text-lg font-bold mb-2 text-amber-800 dark:text-amber-300 flex items-center gap-2">
@@ -127,7 +90,7 @@ export default function AdminStatsPage() {
           <h2 className="text-lg font-bold mb-4 text-blue-800 dark:text-blue-300">Usuarios con más compras</h2>
           <div className="h-48 flex items-center justify-center">
             {Array.isArray(userStats?.top_users) && userStats.top_users.length > 0 ? (
-              <PieChart data={userStats.top_users.map((u: [string, number]) => ({ email: u[0], orders_count: u[1] }))} />
+              <UserBarChart data={userStats.top_users} />
             ) : (
               <span className="text-muted-foreground">No hay datos</span>
             )}
@@ -164,20 +127,25 @@ function BarChart({ data }: { data: [string, number][] }) {
   );
 }
 
-function PieChart({ data }: { data: any[] }) {
-  const chartData = data.map((user) => ({ name: user.email, value: user.orders_count }));
-  const COLORS = ["#2563eb", "#60a5fa", "#818cf8", "#a5b4fc", "#38bdf8", "#0ea5e9"];
+function UserBarChart({ data }: { data: [string, number][] }) {
+  const chartData = data.map(([email, orders_count]) => ({ 
+    name: email.length > 15 ? email.substring(0, 15) + '...' : email, 
+    value: orders_count,
+    fullEmail: email 
+  }));
   return (
     <ResponsiveContainer width="100%" height={180}>
-      <RPieChart>
-        <Pie data={chartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={60} label>
-          {chartData.map((entry, idx) => (
-            <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-        <Legend />
-      </RPieChart>
+      <RBarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+        <XAxis dataKey="name" tick={{ fontSize: 10 }} angle={-45} textAnchor="end" height={60} />
+        <YAxis allowDecimals={false} />
+        <Tooltip 
+          formatter={(value: any, name: any, props: any) => [
+            `${value} órdenes`, 
+            props.payload.fullEmail
+          ]}
+        />
+        <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+      </RBarChart>
     </ResponsiveContainer>
   );
 }

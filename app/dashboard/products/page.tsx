@@ -3,6 +3,7 @@
 import useSWR from "swr";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { BackButton } from "@/components/ui/back-button";
 import { useState } from "react";
 import Link from "next/link";
 import api from "@/lib/axios";
@@ -36,8 +37,10 @@ export default function AdminProductsPage() {
 
   return (
     <div className="container py-6 sm:py-12 px-2">
+      <BackButton />
+      
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold">Productos (Admin)</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold">Productos</h1>
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <Button asChild className="w-full sm:w-auto">
             <Link href="/dashboard/products/new">Crear producto</Link>
@@ -46,13 +49,6 @@ export default function AdminProductsPage() {
             Ver órdenes
           </Button>
         </div>
-      </div>
-      <div className="flex flex-col sm:flex-row gap-2 mb-8">
-        <Button variant="outline" onClick={() => router.push("/dashboard/products")}>Ver productos</Button>
-        <Button variant="outline" onClick={() => router.push("/dashboard/orders")}>Ver órdenes</Button>
-        <Button variant="outline" onClick={() => router.push("/dashboard/carts")}>Ver carritos abandonados</Button>
-        <Button variant="outline" onClick={() => router.push("/dashboard/stats")}>Ver estadísticas</Button>
-        <Button variant="outline" onClick={() => router.push("/dashboard")}>Dashboard</Button>
       </div>
       {isLoading && <div>Cargando productos...</div>}
       {error && <div className="text-red-500">Error al cargar productos</div>}

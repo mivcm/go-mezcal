@@ -18,14 +18,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Mail, Phone, MapPin, Clock, MessageSquare } from "lucide-react";
+import { Mail, MapPin, MessageSquare } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useUserAuthStore } from "@/hooks/use-user-auth-store";
 
 const formSchema = z.object({
   nombre: z.string().min(2, {
@@ -44,6 +39,7 @@ const formSchema = z.object({
 });
 
 export default function ContactPage() {
+  const { user } = useUserAuthStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -51,7 +47,7 @@ export default function ContactPage() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       nombre: "",
-      email: "",
+      email: user?.email || "",
       telefono: "",
       asunto: "",
       mensaje: "",
@@ -60,12 +56,12 @@ export default function ContactPage() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    
+
     // Simulated submission
     setTimeout(() => {
       setIsSubmitting(false);
       form.reset();
-      
+
       toast({
         title: "Mensaje enviado",
         description: "Hemos recibido tu mensaje. Te contactaremos pronto.",
@@ -73,28 +69,6 @@ export default function ContactPage() {
     }, 1500);
   }
 
-  const faqs = [
-    {
-      question: "¿Ofrecen envíos a todo México?",
-      answer: "Sí, realizamos envíos a toda la República Mexicana. Los pedidos suelen entregarse en un plazo de 3 a 5 días hábiles, dependiendo de la localidad.",
-    },
-    {
-      question: "¿Hacen envíos internacionales?",
-      answer: "Actualmente realizamos envíos a Estados Unidos, Canadá y la Unión Europea. Por regulaciones de cada país, los tiempos de entrega pueden variar entre 7 y 14 días hábiles.",
-    },
-    {
-      question: "¿Puedo visitar su tienda física?",
-      answer: "¡Por supuesto! Contamos con una tienda en la Ciudad de México donde puedes conocer y degustar nuestros productos. Te recomendamos agendar una cita para brindarte una mejor atención.",
-    },
-    {
-      question: "¿Ofrecen degustaciones o tours?",
-      answer: "Sí, organizamos degustaciones en nuestra tienda y también colaboramos con algunos de nuestros productores para ofrecer visitas a sus palenques en Oaxaca. Contacta con nosotros para más información y reservaciones.",
-    },
-    {
-      question: "¿Qué métodos de pago aceptan?",
-      answer: "Aceptamos tarjetas de crédito/débito (Visa, Mastercard, American Express), PayPal, transferencias bancarias y pago en efectivo en nuestra tienda física.",
-    },
-  ];
 
   return (
     <div>
@@ -135,9 +109,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-medium text-lg">Ubicación</h3>
                   <address className="not-italic text-muted-foreground">
-                    Av. Revolución 1234<br />
-                    Col. Condesa, CP 06140<br />
-                    Ciudad de México, México
+                    Producto elaborado, en Apulco, por: Mezcal Arias S.A. de C.V.
                   </address>
                 </div>
               </div>
@@ -149,54 +121,11 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-medium text-lg">Correo Electrónico</h3>
                   <p className="text-muted-foreground">
-                    <a href="mailto:info@gomezcal.com" className="hover:text-amber-600">
-                      info@gomezcal.com
+                    <a href="mailto:granespiritumexico@gmail.com" className="hover:text-amber-600">
+                      granespiritumexico@gmail.com
                     </a>
                   </p>
                 </div>
-              </div>
-
-              <div className="flex items-start">
-                <div className="bg-amber-100 dark:bg-amber-900/20 p-3 rounded-full mr-4">
-                  <Phone className="h-6 w-6 text-amber-600 dark:text-amber-400" />
-                </div>
-                <div>
-                  <h3 className="font-medium text-lg">Teléfono</h3>
-                  <p className="text-muted-foreground">
-                    <a href="tel:+525512345678" className="hover:text-amber-600">
-                      +52 (55) 1234 5678
-                    </a>
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start">
-                <div className="bg-amber-100 dark:bg-amber-900/20 p-3 rounded-full mr-4">
-                  <Clock className="h-6 w-6 text-amber-600 dark:text-amber-400" />
-                </div>
-                <div>
-                  <h3 className="font-medium text-lg">Horario de Atención</h3>
-                  <p className="text-muted-foreground">
-                    Lunes a Viernes: 10:00 AM - 7:00 PM<br />
-                    Sábados: 11:00 AM - 5:00 PM<br />
-                    Domingos: Cerrado
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Map */}
-            <div className="mt-10">
-              <div className="aspect-video rounded-lg overflow-hidden border shadow-sm">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.661200207182!2d-99.17256!3d19.419903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff71fb11c969%3A0xd4710f84ba325c79!2sAv.%20Revoluci%C3%B3n%2C%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses-419!2smx!4v1621881234567!5m2!1ses-419!2smx" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen={false} 
-                  loading="lazy"
-                  title="Ubicación de Go.mezcal"
-                />
               </div>
             </div>
           </div>
@@ -276,10 +205,10 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Mensaje</FormLabel>
                         <FormControl>
-                          <Textarea 
-                            placeholder="Escribe tu mensaje aquí..." 
-                            className="min-h-[120px]" 
-                            {...field} 
+                          <Textarea
+                            placeholder="Escribe tu mensaje aquí..."
+                            className="min-h-[120px]"
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -287,8 +216,8 @@ export default function ContactPage() {
                     )}
                   />
 
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full bg-amber-600 hover:bg-amber-700"
                     disabled={isSubmitting}
                   >
@@ -304,10 +233,13 @@ export default function ContactPage() {
         <section className="mt-20">
           <div className="flex items-center gap-4 mb-8">
             <MessageSquare className="h-8 w-8 text-amber-600" />
-            <h2 className="text-3xl font-bold">Preguntas Frecuentes</h2>
+            <div className="flex flex-col">
+              <h2 className="text-3xl font-bold">Preguntas Frecuentes</h2>
+              <p className="text-muted-foreground">En breve actualizaremos esta sección</p>
+            </div>
           </div>
-          
-          <Accordion type="single" collapsible className="max-w-3xl">
+
+          {/*<Accordion type="single" collapsible className="max-w-3xl">
             {faqs.map((faq, index) => (
               <AccordionItem key={index} value={`item-${index}`}>
                 <AccordionTrigger className="text-lg font-medium">
@@ -318,14 +250,14 @@ export default function ContactPage() {
                 </AccordionContent>
               </AccordionItem>
             ))}
-          </Accordion>
-          
+          </Accordion>*/}
+
           <div className="mt-10 text-center">
             <p className="text-muted-foreground mb-4">
               ¿No encuentras la respuesta que buscas?
             </p>
             <Button asChild>
-              <Link href="mailto:info@gomezcal.com">Contáctanos directamente</Link>
+              <Link href="mailto:granespiritumexico@gmail.com">Contáctanos directamente</Link>
             </Button>
           </div>
         </section>

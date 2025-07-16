@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useBlogStore } from "@/hooks/use-blog-store";
 import { formatDate } from "@/lib/utils";
 import type { BlogPost } from "@/types";
+import { avatarUrl } from "./data";
 
 export default function BlogPostPage() {
   const params = useParams();
@@ -64,17 +65,19 @@ export default function BlogPostPage() {
           </div>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{post.title}</h1>
           <div className="flex items-center flex-wrap gap-4 text-muted-foreground">
-            <div className="flex items-center">
-              <div className="relative h-10 w-10 rounded-full overflow-hidden mr-3">
-                <Image
-                  src={post.author.image}
-                  alt={post.author.name}
-                  fill
-                  className="object-cover"
-                />
+            {post.author && (
+              <div className="flex items-center" key={post.author.name}>
+                <div className="relative h-10 w-10 rounded-full overflow-hidden mr-3">
+                  <Image
+                    src={post.author.image}
+                    alt={post.author.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <span className="font-medium">{post.author.name}</span>
               </div>
-              <span className="font-medium">{post.author.name}</span>
-            </div>
+            )}
             <div className="flex items-center">
               <Calendar className="h-4 w-4 mr-2" />
               <span>{formatDate(post.date)}</span>
@@ -85,7 +88,7 @@ export default function BlogPostPage() {
         {/* Feature Image */}
         <div className="relative aspect-video rounded-lg overflow-hidden mb-12">
           <Image
-            src={post.coverImage}
+            src={post.cover_image}
             alt={post.title}
             fill
             className="object-cover"
@@ -104,7 +107,7 @@ export default function BlogPostPage() {
                   const match = paragraph.match(/^#+/);
                   const level = match ? match[0].length : 1;
                   const content = paragraph.replace(/^#+\s+/, '');
-                  
+
                   switch (level) {
                     case 1:
                       return <h1 key={index} className="text-3xl font-bold mt-8 mb-4">{content}</h1>;
@@ -116,7 +119,7 @@ export default function BlogPostPage() {
                       return <h4 key={index} className="text-lg font-bold mt-4 mb-2">{content}</h4>;
                   }
                 }
-                
+
                 // Check if paragraph is a list item
                 if (paragraph.trim().startsWith('-') || paragraph.trim().startsWith('*')) {
                   return (
@@ -125,7 +128,7 @@ export default function BlogPostPage() {
                     </ul>
                   );
                 }
-                
+
                 // Check if paragraph is a numbered list item
                 if (/^\d+\./.test(paragraph.trim())) {
                   return (
@@ -134,7 +137,7 @@ export default function BlogPostPage() {
                     </ol>
                   );
                 }
-                
+
                 // Regular paragraph
                 return paragraph.trim() ? (
                   <p key={index} className="my-4 leading-relaxed">{paragraph}</p>
@@ -146,7 +149,7 @@ export default function BlogPostPage() {
             <div className="mt-12 border-t pt-8">
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
-                  <Link 
+                  <Link
                     key={tag}
                     href={`/blog?tag=${tag}`}
                     className="px-3 py-1 bg-muted rounded-full text-sm hover:bg-amber-100 dark:hover:bg-amber-900/30 hover:text-amber-800 dark:hover:text-amber-200 transition-colors"
@@ -189,14 +192,14 @@ export default function BlogPostPage() {
               <div className="flex items-center mb-4">
                 <div className="relative h-16 w-16 rounded-full overflow-hidden mr-4">
                   <Image
-                    src={post.author.image}
-                    alt={post.author.name}
+                    src={post.author?.image || avatarUrl}
+                    alt={post.author?.name || 'Autor desconocido'}
                     fill
                     className="object-cover"
                   />
                 </div>
                 <div>
-                  <div className="font-medium text-lg">{post.author.name}</div>
+                  <div className="font-medium text-lg">{post.author?.name || 'Autor desconocido'}</div>
                   <div className="text-sm text-muted-foreground">Experto en Mezcal</div>
                 </div>
               </div>
@@ -205,43 +208,20 @@ export default function BlogPostPage() {
               </p>
             </div>
 
-            {/* Table of Contents */}
-            <div className="rounded-lg border p-6">
-              <h3 className="text-lg font-bold mb-4">Contenido</h3>
-              <nav className="space-y-2">
-                {post.content.split('\n').filter(p => p.startsWith('#')).map((heading, index) => {
-                  const match = heading.match(/^#+/);
-                  const level = match ? match[0].length : 1;
-                  const content = heading.replace(/^#+\s+/, '');
-                  
-                  return (
-                    <a 
-                      key={index}
-                      href={`#${content.toLowerCase().replace(/\s+/g, '-')}`}
-                      className={`block text-sm hover:text-amber-600 ${
-                        level === 1 ? 'font-medium' : level === 2 ? '' : 'pl-4 text-muted-foreground'
-                      }`}
-                    >
-                      {content}
-                    </a>
-                  );
-                })}
-              </nav>
-            </div>
-
             {/* Related Posts */}
             <div className="rounded-lg border p-6">
               <h3 className="text-lg font-bold mb-4">Artículos Relacionados</h3>
               <div className="space-y-4">
-                {recentPosts.map((relatedPost) => (
-                  <Link 
+                {recentPosts.length > 0 ? (
+                  recentPosts.map((relatedPost) => (
+                  <Link
                     key={relatedPost.id}
                     href={`/blog/${relatedPost.slug}`}
                     className="flex gap-3 group"
                   >
                     <div className="relative w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
                       <Image
-                        src={relatedPost.coverImage}
+                        src={relatedPost.cover_image || ''}
                         alt={relatedPost.title}
                         fill
                         className="object-cover"
@@ -256,7 +236,10 @@ export default function BlogPostPage() {
                       </p>
                     </div>
                   </Link>
-                ))}
+                  ))
+                ) : (
+                  <p className="text-sm text-muted-foreground">No hay artículos relacionados</p>
+                )}
               </div>
             </div>
           </div>

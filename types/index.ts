@@ -34,9 +34,9 @@ export type BlogPost = {
   slug: string;
   excerpt: string;
   content: string;
-  coverImage: string;
+  cover_image: string;
   date: string;
-  author: {
+  author?: {
     name: string;
     image: string;
   };

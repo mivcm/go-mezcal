@@ -4,9 +4,46 @@ import { useUserAuthStore } from "@/hooks/use-user-auth-store";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
+type Link = {
+  label: string;
+  href: string;
+  color: string;
+}
+
 export default function DashboardPage() {
   const { token } = useUserAuthStore();
-  const router = useRouter();
+  const LINKS: Link[] = [
+    {
+      label: "Gestionar productos",
+      href: "/dashboard/products",
+      color: "bg-amber-600 hover:bg-amber-700",
+    },
+    {
+      label: "Ver órdenes",
+      href: "/dashboard/orders",
+      color: "bg-blue-600 hover:bg-blue-700",
+    },
+    {
+      label: "Configuración del sitio",
+      href: "/dashboard/site-config",
+      color: "bg-purple-600 hover:bg-purple-700",
+    },
+    {
+      label: "Blogs",
+      href: "/dashboard/blogs",
+      color: "bg-green-600 hover:bg-green-700",
+    },
+    {
+      label: "Estadísticas",
+      href: "/dashboard/stats",
+      color: "bg-yellow-600 hover:bg-yellow-700",
+    },
+    {
+      label: "Mensajes de contacto",
+      href: "/dashboard/contact-messages",
+      color: "bg-red-600 hover:bg-red-700",
+    },
+  ]
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-2">
@@ -15,21 +52,11 @@ export default function DashboardPage() {
         <p className="mb-6 text-center text-sm sm:text-base">Bienvenido al panel de administración.</p>
         {token && (
           <div className="flex flex-col items-center gap-3 sm:gap-4 mt-6 w-full">
-            <Link href="/dashboard/products" className="w-full">
-              <span className="block w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 sm:px-6 rounded transition text-center text-sm sm:text-base">Gestionar productos</span>
-            </Link>
-            <Link href="/dashboard/orders" className="w-full">
-              <span className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 sm:px-6 rounded transition text-center text-sm sm:text-base">Ver órdenes</span>
-            </Link>
-            <Link href="/dashboard/carts" className="w-full">
-              <span className="block w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 sm:px-6 rounded transition text-center text-sm sm:text-base">Carritos abandonados</span>
-            </Link>
-            <Link href="/dashboard/stats" className="w-full">
-              <span className="block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 sm:px-6 rounded transition text-center text-sm sm:text-base">Estadísticas</span>
-            </Link>
-            <Link href="/dashboard/site-config" className="w-full">
-              <span className="block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 sm:px-6 rounded transition text-center text-sm sm:text-base">Configuración del sitio</span>
-            </Link>
+            {LINKS.map((link) => (
+              <Link href={link.href} className={`w-full ${link.color}`}>
+                <span className="block w-full text-white font-bold py-2 px-4 sm:px-6 rounded transition text-center text-sm sm:text-base">{link.label}</span>
+              </Link>
+            ))}
           </div>
         )}
       </div>
