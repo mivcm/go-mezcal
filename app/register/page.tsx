@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Separator } from "@/components/ui/separator"
-import { Progress } from "@/components/ui/progress"
+
 import { useUserAuthStore } from "@/hooks/use-user-auth-store"
 import Link from "next/link"
 import {
@@ -247,7 +247,15 @@ export default function RegisterPage() {
                         {getPasswordStrengthText()}
                       </span>
                     </div>
-                    <Progress value={passwordStrength.score} className="h-2" />
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="h-2 rounded-full transition-all duration-300"
+                        style={{ 
+                          width: `${passwordStrength.score}%`,
+                          backgroundColor: passwordStrength.score >= 75 ? '#10b981' : passwordStrength.score >= 50 ? '#f59e0b' : '#ef4444'
+                        }}
+                      />
+                    </div>
                     {passwordStrength.feedback.length > 0 && (
                       <div className="space-y-1">
                         <p className="text-xs text-muted-foreground">Necesitas:</p>
