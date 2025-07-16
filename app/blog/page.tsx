@@ -1,13 +1,12 @@
+"use client"
+
 import Link from "next/link";
 import { Metadata } from "next";
 import { useEffect } from "react";
 import { useBlogStore } from "@/hooks/use-blog-store";
 import { BlogCard } from "@/components/blog-card";
 
-export const metadata: Metadata = {
-  title: "Blog | Go.mezcal",
-  description: "Artículos sobre la cultura, producción y degustación del mezcal artesanal mexicano.",
-};
+
 
 export default function BlogPage({ 
   searchParams 

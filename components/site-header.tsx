@@ -190,34 +190,50 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center">
+      <div className="container flex h-16 items-center px-2 sm:px-4">
         <div className="flex items-center justify-between w-full">
           <div className="flex">
-            <Link href="/" className="mr-6 flex items-center space-x-2">
-              <span className="font-bold text-2xl bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">
+            <Link href="/" className="mr-4 sm:mr-6 flex items-center space-x-2">
+              <span className="font-bold text-xl sm:text-2xl bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">
                 Go.mezcal
               </span>
             </Link>
-            <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+            <nav className="hidden md:flex items-center space-x-4 sm:space-x-6 text-xs sm:text-sm font-medium">
               {renderNavItems()}
             </nav>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="ml-2 p-2 h-10 w-10 flex items-center justify-center border border-amber-200 dark:border-stone-700 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+              onClick={() => setIsMenuOpen((open) => !open)}
+              aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </Button>
+          </div>
+          <div className="hidden md:flex items-center">
+            {/* Botones solo en desktop */}
             {!token && (
               <>
-                <Link href="/login" className="mr-2">
+                <Link href="/login" className="mr-1 sm:mr-2">
                   <Button variant="secondary" size="sm">
                     Iniciar sesión
                   </Button>
                 </Link>
-                <Link href="/register" className="mr-3">
+                <Link href="/register" className="mr-2 sm:mr-3">
                   <Button variant="outline" size="sm">
                     Registrarse
                   </Button>
                 </Link>
               </>
             )}
-            <Link href="/carrito" className="mr-3">
+            <Link href="/carrito" className="mr-2 sm:mr-3">
               <Button
                 variant="ghost"
                 size="icon"
@@ -236,11 +252,10 @@ export function SiteHeader() {
                 </span>
               </Button>
             </Link>
-
             {token && user && (
               <>
                 {!isAdmin && (
-                  <Link href="/orders" className="mr-2">
+                  <Link href="/orders" className="mr-1 sm:mr-2">
                     <Button
                       variant="outline"
                       size="sm"
@@ -250,9 +265,8 @@ export function SiteHeader() {
                     </Button>
                   </Link>
                 )}
-
                 {isAdmin && (
-                  <Link href="/dashboard" className="mr-2">
+                  <Link href="/dashboard" className="mr-1 sm:mr-2">
                     <Button variant="secondary" size="sm">
                       Dashboard
                     </Button>
@@ -261,48 +275,59 @@ export function SiteHeader() {
                 <Button
                   variant="destructive"
                   size="sm"
-                  className="ml-2"
+                  className="ml-1 sm:ml-2"
                   onClick={handleLogout}
                 >
                   Cerrar sesión
                 </Button>
               </>
             )}
-            <div className="hidden md:block">
+            <div className="ml-2">
               <ModeToggle />
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden ml-2"
-              onClick={() => setIsMenuOpen((open) => !open)}
-              aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
-            >
-              {isMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
-            </Button>
           </div>
         </div>
       </div>
       {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="container py-4 space-y-4">
+        <div className="md:hidden border-t bg-background/95">
+          <div className="container py-4 space-y-4 px-2">
             {renderMobileNavItems()}
-            <div className="pt-4 flex items-center justify-between">
-              <ModeToggle />
-              {token && (
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  className="ml-2"
-                  onClick={handleLogout}
-                >
-                  Cerrar sesión
+            <div className="pt-4 flex flex-col gap-2">
+              <Link href="/carrito" onClick={() => setIsMenuOpen(false)}>
+                <Button variant="ghost" className="w-full flex items-center justify-start gap-2">
+                  <ShoppingCart className="h-5 w-5" />
+                  Carrito
+                  <span className="ml-auto bg-amber-600 text-white rounded-full px-2 text-xs">{itemCount}</span>
                 </Button>
+              </Link>
+              {!token && (
+                <>
+                  <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="secondary" className="w-full mb-1">Iniciar sesión</Button>
+                  </Link>
+                  <Link href="/register" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="w-full mb-1">Registrarse</Button>
+                  </Link>
+                </>
               )}
+              {token && user && (
+                <>
+                  {!isAdmin && (
+                    <Link href="/orders" onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="outline" className="w-full mb-1 border-amber-600 text-amber-600">Mis Órdenes</Button>
+                    </Link>
+                  )}
+                  {isAdmin && (
+                    <Link href="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="secondary" className="w-full mb-1">Dashboard</Button>
+                    </Link>
+                  )}
+                  <Button variant="destructive" className="w-full mb-1" onClick={() => { handleLogout(); setIsMenuOpen(false); }}>Cerrar sesión</Button>
+                </>
+              )}
+              <div className="w-full flex justify-start mt-2">
+                <ModeToggle />
+              </div>
             </div>
           </div>
         </div>

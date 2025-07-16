@@ -42,18 +42,49 @@ export default function AdminStatsPage() {
   if (loading) return <div className="container py-16 text-center">Cargando estadísticas...</div>;
   if (error) return <div className="container py-16 text-center text-red-500">{error}</div>;
 
-  console.log(userStats);
-      
+  console.log(abandoned);
+  
+
 
   return (
     <div className="container py-12 max-w-4xl">
       <h1 className="text-2xl font-bold mb-8">Estadísticas de la tienda</h1>
-      <div className="flex gap-4 mb-8">
-        <Button variant="outline" onClick={() => router.push("/dashboard/products")}>Ver productos</Button>
-        <Button variant="outline" onClick={() => router.push("/dashboard/orders")}>Ver órdenes</Button>
-        <Button variant="outline" onClick={() => router.push("/dashboard/carts")}>Ver carritos abandonados</Button>
-        <Button variant="outline" onClick={() => router.push("/dashboard/stats")}>Ver estadísticas</Button>
-        <Button variant="outline" onClick={() => router.push("/dashboard")}>Dashboard</Button>
+      <div className="flex flex-wrap gap-2 md:gap-4 mb-8">
+        <Button
+          variant="outline"
+          className="flex-1 min-w-[140px]"
+          onClick={() => router.push("/dashboard/products")}
+        >
+          Ver productos
+        </Button>
+        <Button
+          variant="outline"
+          className="flex-1 min-w-[140px]"
+          onClick={() => router.push("/dashboard/orders")}
+        >
+          Ver órdenes
+        </Button>
+        <Button
+          variant="outline"
+          className="flex-1 min-w-[140px]"
+          onClick={() => router.push("/dashboard/carts")}
+        >
+          Ver carritos abandonados
+        </Button>
+        <Button
+          variant="outline"
+          className="flex-1 min-w-[140px]"
+          onClick={() => router.push("/dashboard/stats")}
+        >
+          Ver estadísticas
+        </Button>
+        <Button
+          variant="outline"
+          className="flex-1 min-w-[140px]"
+          onClick={() => router.push("/dashboard")}
+        >
+          Dashboard
+        </Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <Card className="p-6 flex flex-col items-center justify-center bg-gradient-to-br from-amber-100 to-amber-300 dark:from-zinc-800 dark:to-zinc-900 shadow-lg">
@@ -69,7 +100,7 @@ export default function AdminStatsPage() {
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" className="inline-block text-red-600"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
             Carritos abandonados
           </h2>
-          <div className="text-4xl font-extrabold text-red-600 mb-2">{abandoned?.total_abandoned ?? 0}</div>
+          <div className="text-4xl font-extrabold text-red-600 mb-2">{abandoned?.abandoned_carts ?? 0}</div>
         </Card>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">

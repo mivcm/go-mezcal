@@ -7,9 +7,10 @@ import { TestimonialCard } from "@/components/testimonial-card";
 import { getFeaturedProducts } from "@/data/products";
 import { getFeaturedPosts, getRecentPosts } from "@/data/blog-posts";
 import { getTestimonials } from "@/data/testimonials";
+import HeroSection from "@/components/hero-section";
+import FeaturedProducts from "@/components/featured-products";
 
 export default function Home() {
-  const featuredProducts = getFeaturedProducts();
   const featuredPosts = getFeaturedPosts();
   const recentPosts = getRecentPosts(3);
   const testimonials = getTestimonials();
@@ -17,49 +18,10 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative">
-        <div className="absolute inset-0 bg-black/40 z-10" />
-        <div className="relative h-[80vh] bg-cover bg-center">
-          <Image
-            src="https://images.pexels.com/photos/8105036/pexels-photo-8105036.jpeg"
-            alt="Mezcal Artesanal Mexicano"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 z-20 flex items-center justify-center text-center p-4">
-            <div className="max-w-3xl mx-auto">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
-                La Tradición del Mezcal Artesanal
-              </h1>
-              <p className="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-                Descubre nuestra colección de mezcales artesanales elaborados con técnicas ancestrales por maestros mezcaleros mexicanos.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild size="lg" className="bg-amber-600 hover:bg-amber-700 text-white">
-                  <Link href="/productos">Explorar Productos</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10 sm:ml-4">
-                  <Link href="/nosotros">Conoce Nuestra Historia</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection/>
 
       {/* Featured Products */}
-      <section className="py-16 bg-amber-50/50 dark:bg-stone-900">
-        <div className="container">
-          <div className="flex flex-col sm:flex-row justify-between items-baseline mb-8">
-            <h2 className="text-3xl font-bold">Mezcales Destacados</h2>
-            <Link href="/productos" className="text-amber-600 hover:text-amber-700 font-medium">
-              Ver todos los mezcales
-            </Link>
-          </div>
-          <ProductList products={featuredProducts} />
-        </div>
-      </section>
+      <FeaturedProducts/>
 
       {/* About Us */}
       <section className="py-16 bg-white dark:bg-stone-900">

@@ -36,20 +36,24 @@ interface OrderItem {
 }
 
 interface Order {
-  id: string
+  id: number
   created_at: string
-  status: "pending" | "processing" | "shipped" | "delivered" | "cancelled"
-  total: number
+  status: "pending" | "paid" | "completed" | "cancelled"
+  total: string
   items: OrderItem[]
+  user: {
+    id: number
+    email: string
+  }
+  transaction_id: number
   shipping_address?: string
   payment_method?: string
 }
 
 const statusConfig = {
   pending: { label: "Pendiente", color: "bg-yellow-100 text-yellow-800", icon: Clock },
-  processing: { label: "Procesando", color: "bg-blue-100 text-blue-800", icon: Package },
-  shipped: { label: "Enviado", color: "bg-purple-100 text-purple-800", icon: Truck },
-  delivered: { label: "Entregado", color: "bg-green-100 text-green-800", icon: CheckCircle },
+  paid: { label: "Pagado", color: "bg-green-100 text-green-800", icon: CheckCircle },
+  completed: { label: "Completado", color: "bg-blue-100 text-blue-800", icon: Package },
   cancelled: { label: "Cancelado", color: "bg-red-100 text-red-800", icon: XCircle },
 }
 
@@ -101,9 +105,9 @@ export default function OrdersPage() {
         case "oldest":
           return new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
         case "highest":
-          return b.total - a.total
+          return parseFloat(b.total) - parseFloat(a.total)
         case "lowest":
-          return a.total - b.total
+          return parseFloat(a.total) - parseFloat(b.total)
         default:
           return 0
       }
@@ -210,9 +214,8 @@ export default function OrdersPage() {
               <SelectContent>
                 <SelectItem value="all">Todos los estados</SelectItem>
                 <SelectItem value="pending">Pendiente</SelectItem>
-                <SelectItem value="processing">Procesando</SelectItem>
-                <SelectItem value="shipped">Enviado</SelectItem>
-                <SelectItem value="delivered">Entregado</SelectItem>
+                <SelectItem value="paid">Pagado</SelectItem>
+                <SelectItem value="completed">Completado</SelectItem>
                 <SelectItem value="cancelled">Cancelado</SelectItem>
               </SelectContent>
             </Select>
@@ -282,7 +285,7 @@ export default function OrdersPage() {
                         {statusInfo.label}
                       </Badge>
                       <div className="text-right">
-                        <div className="text-2xl font-bold">${order.total.toLocaleString()}</div>
+                        <div className="text-2xl font-bold">${parseFloat(order.total).toLocaleString()}</div>
                         <div className="text-sm text-muted-foreground">MXN</div>
                       </div>
                     </div>
@@ -348,7 +351,7 @@ export default function OrdersPage() {
                       <Eye className="h-4 w-4 mr-2" />
                       Ver detalles
                     </Button>
-                    {order.status === "delivered" && (
+                    {order.status === "completed" && (
                       <Button variant="outline" size="sm">
                         <RotateCcw className="h-4 w-4 mr-2" />
                         Reordenar

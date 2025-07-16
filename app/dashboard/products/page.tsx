@@ -35,19 +35,19 @@ export default function AdminProductsPage() {
   };
 
   return (
-    <div className="container py-12">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Productos (Admin)</h1>
-        <div className="flex gap-2">
-          <Button asChild>
+    <div className="container py-6 sm:py-12 px-2">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">Productos (Admin)</h1>
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <Button asChild className="w-full sm:w-auto">
             <Link href="/dashboard/products/new">Crear producto</Link>
           </Button>
-          <Button variant="outline" onClick={() => router.push('/dashboard/orders')}>
+          <Button variant="outline" className="w-full sm:w-auto" onClick={() => router.push('/dashboard/orders')}>
             Ver órdenes
           </Button>
         </div>
       </div>
-      <div className="flex gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row gap-2 mb-8">
         <Button variant="outline" onClick={() => router.push("/dashboard/products")}>Ver productos</Button>
         <Button variant="outline" onClick={() => router.push("/dashboard/orders")}>Ver órdenes</Button>
         <Button variant="outline" onClick={() => router.push("/dashboard/carts")}>Ver carritos abandonados</Button>
@@ -57,48 +57,33 @@ export default function AdminProductsPage() {
       {isLoading && <div>Cargando productos...</div>}
       {error && <div className="text-red-500">Error al cargar productos</div>}
       {deleteError && <div className="text-red-500 mb-4">{deleteError}</div>}
-      <div className="overflow-x-auto">
-        <table className="min-w-full border text-sm">
-          <thead>
-            <tr className="bg-muted">
-              <th className="p-2 border">Nombre</th>
-              <th className="p-2 border">Categoría</th>
-              <th className="p-2 border">Precio</th>
-              <th className="p-2 border">Stock</th>
-              <th className="p-2 border">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products?.map((product: any) => (
-              <tr key={product.id} className="border-b">
-                <td className="p-2 border font-medium">{product.name}</td>
-                <td className="p-2 border">{product.category}</td>
-                <td className="p-2 border">${product.price}</td>
-                <td className="p-2 border">{product.stock}</td>
-                <td className="p-2 border space-x-2">
-                  <Button asChild size="sm" variant="outline">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {products?.map((product: any) => (
+          <Card key={product.id} className="p-4 flex flex-col gap-2 h-full">
+            <div className="flex flex-col sm:flex-row gap-2 items-center">
+              <img src={product.images?.[0] || "/placeholder.svg"} alt={product.name} className="w-full sm:w-24 h-32 object-cover rounded" />
+              <div className="flex-1 w-full">
+                <h2 className="font-bold text-lg line-clamp-2">{product.name}</h2>
+                <p className="text-sm text-muted-foreground line-clamp-2">{product.shortDescription}</p>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  <Button asChild size="sm" className="w-full sm:w-auto">
                     <Link href={`/dashboard/products/${product.id}/edit`}>Editar</Link>
                   </Button>
                   <Button
-                    size="sm"
                     variant="destructive"
+                    size="sm"
+                    className="w-full sm:w-auto"
                     onClick={() => handleDelete(product.id)}
                     disabled={deletingId === product.id}
                   >
                     {deletingId === product.id ? "Eliminando..." : "Eliminar"}
                   </Button>
-                </td>
-              </tr>
-            ))}
-            {products?.length === 0 && (
-              <tr>
-                <td colSpan={5} className="text-center py-8 text-muted-foreground">
-                  No hay productos registrados.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                </div>
+                {deleteError && <div className="text-red-500 text-xs mt-1">{deleteError}</div>}
+              </div>
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
   );

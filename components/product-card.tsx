@@ -3,15 +3,47 @@ import Image from "next/image";
 import { Product } from "@/types";
 import { Badge } from "@/components/ui/badge-special";
 import { cn, formatPrice } from "@/lib/utils";
+import { Star, StarHalf } from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
   className?: string;
 }
 
+// Función para renderizar las estrellas según el rating
+const renderStars = (rating: number) => {
+  const stars = [];
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 !== 0;
+  
+  // Estrellas llenas
+  for (let i = 0; i < fullStars; i++) {
+    stars.push(
+      <Star key={`full-${i}`} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+    );
+  }
+  
+  // Estrella media si es necesario
+  if (hasHalfStar) {
+    stars.push(
+      <StarHalf key="half" className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+    );
+  }
+  
+  // Estrellas vacías para completar 5
+  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+  for (let i = 0; i < emptyStars; i++) {
+    stars.push(
+      <Star key={`empty-${i}`} className="w-4 h-4 text-gray-300" />
+    );
+  }
+  
+  return stars;
+};
+
 export function ProductCard({ product, className }: ProductCardProps) {
   return (
-    <Link href={`/productos/${product.slug}`} className={cn("group relative", className)}>
+    <Link href={`/productos/${product.id}`} className={cn("group relative", className)}>
       <div className="overflow-hidden rounded-lg bg-stone-900 dark:bg-card aspect-[3/4]">
         <div className="h-full w-full relative">
           <Image
@@ -56,9 +88,11 @@ export function ProductCard({ product, className }: ProductCardProps) {
             <span className="ml-2 text-xs font-bold text-red-600 bg-red-100 rounded px-2 py-1">Agotado</span>
           )}
         </div>
-        <div className="flex items-center">
-          <span className="text-yellow-500">★</span>
-          <span className="ml-1 text-sm font-medium">{product.rating}</span>
+        <div className="flex items-center gap-1 mt-1">
+          <div className="flex items-center">
+            {renderStars(product.rating)}
+          </div>
+          <span className="text-sm text-muted-foreground">({product.rating})</span>
         </div>
       </div>
     </Link>

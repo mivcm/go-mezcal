@@ -5,6 +5,7 @@ import { useUserAuthStore } from "@/hooks/use-user-auth-store";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types";
+import api from "@/lib/axios"; // Asegúrate de que esta sea la ruta correcta a tu instancia de axios
 
 export default function AdminOrdersPage() {
   const { token, isAdmin } = useUserAuthStore();
@@ -45,124 +46,83 @@ export default function AdminOrdersPage() {
     );
 
   return (
-    <div className="container py-12 max-w-5xl">
-      <h1 className="text-2xl font-bold mb-8">Órdenes (Admin)</h1>
-      <div className="flex gap-4 mb-8">
+    <div className="container py-6 sm:py-12 px-2 max-w-5xl">
+      <h1 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-center sm:text-left">
+        Órdenes (Admin)
+      </h1>
+      <div className="flex flex-col sm:flex-row gap-2 mb-6 sm:mb-8 w-full">
         <Button
-          variant="outline"
+          className="w-full sm:w-auto"
           onClick={() => router.push("/dashboard/products")}
         >
           Ver productos
         </Button>
         <Button
-          variant="outline"
+          className="w-full sm:w-auto"
           onClick={() => router.push("/dashboard/carts")}
         >
           Ver carritos abandonados
         </Button>
         <Button
-          variant="outline"
+          className="w-full sm:w-auto"
           onClick={() => router.push("/dashboard/stats")}
         >
           Ver estadísticas
         </Button>
-        <Button variant="outline" onClick={() => router.push("/dashboard")}>
-          Dashboard
-        </Button>
       </div>
-      {orders.length === 0 ? (
-        <div className="text-center text-muted-foreground">
-          No hay órdenes registradas.
-        </div>
-      ) : (
-        <div className="space-y-8">
-          {orders.map((order) => (
-            <div
-              key={order.id}
-              className="border rounded-lg p-6 bg-white dark:bg-zinc-900 shadow"
-            >
-              <div className="flex justify-between mb-2">
-                <span className="font-medium">Orden #{order.id}</span>
-                <span className="text-sm text-muted-foreground">
-                  {new Date(order.created_at).toLocaleDateString("es-MX", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </span>
-              </div>
-              <div className="mb-2">
-                <span className="font-medium">Usuario:</span>{" "}
-                {order.user_email || order.user?.email || "-"}
-              </div>
-              <div className="mb-2">
-                <span className="font-medium">Estado:</span>{" "}
-                {order.status === "completed" ? "Completada" : order.status}
-              </div>
-              <div className="mb-2">
-                <span className="font-medium">Total:</span> ${order.total}
-              </div>
-              <div className="mb-2">
-                <span className="font-medium">Productos:</span>
-                <ul className="list-disc ml-6">
-                  {order.items?.map(
-                    (item: {
-                      product: Product;
-                      quantity: number;
-                      price: string;
-                    }) => (
-                      <li key={item.product.id}>
-                        {item.product.name} x{item.quantity} - {item.price} MXN
-                      </li>
-                    )
-                  )}
-                </ul>
-              </div>
-              <div className="mb-2">
-                <span className="font-medium">Transacción:</span>{" "}
-                {order.transaction_id || order.transaction?.id || "-"}
-              </div>
-              {order.status === "pending" && (
-                <div className="mb-2">
-                  <span className="font-medium">Cambiar estado:</span>
-
-                  <Button
-                    size="sm"
-                    className="ml-2"
-                    onClick={async () => {
-                      try {
-                        const res = await fetch(
-                          `http://localhost:3001/api/v1/orders/${order.id}/complete`,
-                          {
-                            method: "PATCH",
-                            headers: {
-                              "Content-Type": "application/json",
-                              Authorization: `Bearer ${token}`,
-                            },
-                          }
-                        );
-                        if (!res.ok)
-                          throw new Error("No se pudo completar la orden");
-                        setOrders((prev) =>
-                          prev.map((o) =>
-                            o.id === order.id
-                              ? { ...o, status: "completed" }
-                              : o
-                          )
-                        );
-                      } catch (err) {
-                        alert("Error al completar la orden");
-                      }
-                    }}
-                  >
-                    Marcar como completada
-                  </Button>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-xs sm:text-sm">
+          <thead>
+            <tr className="bg-muted">
+              <th className="p-2">ID</th>
+              <th className="p-2">Usuario</th>
+              <th className="p-2">Total</th>
+              <th className="p-2">Estado</th>
+              <th className="p-2">Fecha</th>
+              <th className="p-2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order.id} className="border-b">
+                <td className="p-2 text-center">{order.id}</td>
+                <td className="p-2 text-center">{order.user?.email || "-"}</td>
+                <td className="p-2 text-center">${order.total}</td>
+                <td className="p-2 text-center">{order.status}</td>
+                <td className="p-2 text-center">
+                  {new Date(order.created_at).toLocaleDateString()}
+                </td>
+                <td className="p-2 text-center">
+                  {(order.status === "pending" || order.status === "paid") ? (
+                    <Button
+                      size="sm"
+                      className="w-full sm:w-auto mt-2"
+                      onClick={async () => {
+                        try {
+                          const res = await api.patch(
+                            `/api/v1/orders/${order.id}/complete`
+                          );
+                          if (res.status !== 200 && res.status !== 201)
+                            throw new Error("No se pudo completar la orden");
+                          setOrders((prev) =>
+                            prev.map((o) =>
+                              o.id === order.id ? { ...o, status: "completed" } : o
+                            )
+                          );
+                        } catch (err: any) {
+                          alert((err as any).message || "Error al completar la orden");
+                        }
+                      }}
+                    >
+                      Completar orden
+                    </Button>
+                  ) : null}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

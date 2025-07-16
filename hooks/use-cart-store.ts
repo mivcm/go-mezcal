@@ -14,10 +14,11 @@ export type CartItem = {
 export type CartState = {
   items: CartItem[];
   status: "active" | "abandoned" | "converted";
+  cartId?: string;
   fetchCart: () => Promise<void>;
   addItem: (item: CartItem) => Promise<void>;
   removeItem: (productId: string) => Promise<void>;
-  abandonCart: () => Promise<void>;
+  abandonCart: (cartId?: string) => Promise<void>;
   convertToOrder: () => Promise<any>;
   clear: () => void;
 };
@@ -25,6 +26,7 @@ export type CartState = {
 export const useCartStore = create<CartState>((set, get) => ({
   items: [],
   status: "active",
+  cartId: undefined,
   async fetchCart() {
     const { data } = await api.get("/api/v1/cart");
     const items = Array.isArray(data.items)
@@ -37,7 +39,7 @@ export const useCartStore = create<CartState>((set, get) => ({
           stock: item.product.stock,
         }))
       : [];
-    set({ items, status: data.status });
+    set({ items, status: data.status, cartId: data.id?.toString() });
   },
   async addItem(item) {
     await api.post(
@@ -52,17 +54,21 @@ export const useCartStore = create<CartState>((set, get) => ({
     });
     await get().fetchCart();
   },
-  async abandonCart() {
+  async abandonCart(cartId?: string) {
+    if (!cartId) return;
     await api.post(
-      "/api/v1/cart/abandon",
-      {}
+      `/api/v1/cart/abandon`,
+      { cart_id: cartId }
     );
     set({ status: "abandoned" });
   },
   async convertToOrder() {
     const { data } = await api.post(
       "/api/v1/cart/convert_to_order",
-      {}
+      {
+        success_url: `${window.location.origin}/success`,
+        cancel_url: `${window.location.origin}/carrito`,
+      }
     );
     set({ status: "converted" });
     return data;

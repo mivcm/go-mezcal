@@ -38,6 +38,10 @@ export const useUserAuthStore = create<UserAuthState>((set) => ({
     localStorage.removeItem("user_token");
     localStorage.removeItem("user_is_admin");
     localStorage.removeItem("user_email");
+    // Limpiar el carrito al desloguear
+    import("@/hooks/use-cart-store").then(({ useCartStore }) => {
+      useCartStore.getState().clear();
+    });
   },
   setTokenFromStorage: async () => {
     const token = localStorage.getItem("user_token");
