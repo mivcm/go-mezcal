@@ -1,5 +1,5 @@
 import { NavigationItem, FooterLink, SocialLink } from "@/types";
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
 
 export const mainNavItems: NavigationItem[] = [
   {
@@ -72,22 +72,12 @@ export const footerLinks: FooterLink[] = [
 export const socialLinks: SocialLink[] = [
   {
     name: "Facebook",
-    href: "https://facebook.com",
+    href: "https://www.facebook.com/granespiritumx/?locale=es_LA",
     icon: Facebook,
   },
   {
     name: "Instagram",
-    href: "https://instagram.com",
+    href: "https://www.instagram.com/granespiritumx/?hl=es",
     icon: Instagram,
-  },
-  {
-    name: "Twitter",
-    href: "https://twitter.com",
-    icon: Twitter,
-  },
-  {
-    name: "Youtube",
-    href: "https://youtube.com",
-    icon: Youtube,
   },
 ];

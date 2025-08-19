@@ -75,7 +75,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="relative h-[40vh] bg-cover bg-center">
         <Image
-          src="https://images.pexels.com/photos/12706893/pexels-photo-12706893.jpeg"
+          src="/images/Contacto.png"
           alt="Contáctanos - Go.mezcal"
           fill
           className="object-cover"

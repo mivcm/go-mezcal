@@ -7,7 +7,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { useSiteSettingsStore } from "@/hooks/use-site-settings-store"
 import { useEffect } from "react"
-import { Heart, Leaf, Users, Award, ArrowRight, Sparkles, Mountain, HandHeart } from "lucide-react"
+import { Heart, Leaf, Users, Award, ArrowRight, Sparkles, Mountain, HandHeart, HeartHandshake, LeafyGreen, Medal } from "lucide-react"
 
 export default function AboutUs() {
     const { getImage, currentImages } = useSiteSettingsStore()
@@ -23,17 +23,17 @@ export default function AboutUs() {
             description: "Preservamos tradiciones milenarias con respeto y dedicación",
         },
         {
-            icon: Leaf,
+            icon: LeafyGreen,
             title: "Sostenibilidad",
             description: "Comprometidos con el medio ambiente y prácticas responsables",
         },
         {
-            icon: HandHeart,
+            icon: HeartHandshake,
             title: "Comercio Justo",
             description: "Compensación justa para nuestros maestros mezcaleros",
         },
         {
-            icon: Award,
+            icon: Medal,
             title: "Calidad Premium",
             description: "Solo los mejores mezcales llegan a tu mesa",
         },
