@@ -27,7 +27,7 @@ export default function ProductEditForm({ productId }: Props) {
   const router = useRouter();
 
   const fetcher = (url: string) => api.get(url).then(res => res.data);
-  const { data: product, isLoading } = useSWR(productId ? `http://localhost:3001/api/v1/products/${productId}` : null, fetcher);
+  const { data: product, isLoading } = useSWR(productId ? `${process.env.NEXT_PUBLIC_API_URL}/api/v1/products/${productId}` : null, fetcher);
 
   const [form, setForm] = useState<any>(null);
   const [ingredientInput, setIngredientInput] = useState("");

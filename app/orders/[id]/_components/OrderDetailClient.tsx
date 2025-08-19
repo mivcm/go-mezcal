@@ -19,7 +19,7 @@ export default function OrderDetailClient({ id }: { id: string }) {
     }
     const fetchOrder = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/api/v1/orders/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/orders/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error("No se pudo cargar la orden");
