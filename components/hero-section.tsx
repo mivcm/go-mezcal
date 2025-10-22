@@ -39,7 +39,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-black/40 z-10" />
       <div className="relative h-[80vh] bg-cover bg-center">
         <Image
-          src={currentImages.hero_image || 'https://images.pexels.com/photos/8105036/pexels-photo-8105036.jpeg'}
+          src={currentImages.hero_image || ''}
           alt="Mezcal Artesanal Mexicano"
           fill
           className="object-cover"

@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MapPin, MessageSquare } from "lucide-react";
+import { Mail, MapPin, MessageSquare, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useUserAuthStore } from "@/hooks/use-user-auth-store";
 
@@ -69,7 +69,6 @@ export default function ContactPage() {
     }, 1500);
   }
 
-
   return (
     <div>
       {/* Hero Section */}
@@ -84,9 +83,12 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-center justify-center text-center">
           <div>
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Contáctanos</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+              Contáctanos
+            </h1>
             <p className="text-lg text-white/90 max-w-xl mx-auto">
-              Estamos aquí para atender tus dudas, recibir tus comentarios o ayudarte con cualquier consulta sobre nuestros mezcales.
+              Estamos aquí para atender tus dudas, recibir tus comentarios o
+              ayudarte con cualquier consulta sobre nuestros mezcales.
             </p>
           </div>
         </div>
@@ -98,7 +100,9 @@ export default function ContactPage() {
           <div>
             <h2 className="text-3xl font-bold mb-6">Información de Contacto</h2>
             <p className="text-muted-foreground mb-8">
-              Puedes contactarnos a través del formulario o utilizando cualquiera de los siguientes medios. Nuestro equipo estará encantado de asistirte.
+              Puedes contactarnos a través del formulario o utilizando
+              cualquiera de los siguientes medios. Nuestro equipo estará
+              encantado de asistirte.
             </p>
 
             <div className="space-y-6">
@@ -109,7 +113,8 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-medium text-lg">Ubicación</h3>
                   <address className="not-italic text-muted-foreground">
-                    Producto elaborado, en Apulco, por: Mezcal Arias S.A. de C.V.
+                    Tienda en línea atendida desde la Ciudad de Villa de
+                    Álvarez, Colima.
                   </address>
                 </div>
               </div>
@@ -121,10 +126,58 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-medium text-lg">Correo Electrónico</h3>
                   <p className="text-muted-foreground">
-                    <a href="mailto:granespiritumexico@gmail.com" className="hover:text-amber-600">
+                    <a
+                      href="mailto:granespiritumexico@gmail.com"
+                      className="hover:text-amber-600"
+                    >
                       granespiritumexico@gmail.com
                     </a>
                   </p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-amber-100 dark:bg-amber-900/20 p-3 rounded-full mr-4">
+                  <Phone className="h-6 w-6 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="font-medium text-lg">Whatsapp</h3>
+                  <p className="text-muted-foreground">
+                    <a
+                      href="tel:+523121097042"
+                      className="hover:text-amber-600"
+                    >
+                      312 109 7042
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <div className="flex items-center gap-4 mb-6 mt-10">
+                  <MessageSquare className="h-8 w-8 text-amber-600" />
+                  <div className="flex flex-col">
+                    <h2 className="text-3xl font-bold">Preguntas Frecuentes</h2>
+                    <p className="text-muted-foreground">
+                      En breve actualizaremos esta sección
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <div className="bg-card rounded-lg border p-8 shadow-sm">
+                  <h3 className="text-3xl font-bold text-center">Contáctanos</h3>
+                  <div className="mt-3 text-center">
+                    <p className="text-muted-foreground mb-4">
+                      ¿No encuentras la respuesta que buscas?
+                    </p>
+                    <Button
+                      asChild
+                      className="w-full bg-amber-600 hover:bg-amber-700"
+                    >
+                      <Link href="mailto:granespiritumexico@gmail.com">
+                        Contáctanos directamente
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -132,14 +185,24 @@ export default function ContactPage() {
 
           {/* Contact Form */}
           <div>
+            <h2 className="text-3xl font-bold mb-6">Contáctanos</h2>
+            <p className="text-muted-foreground mb-6">
+              ¿Quieres anunciar tus productos con nosotros? ¿Tienes una
+              solicitud especial?
+            </p>
+
             <div className="bg-card rounded-lg border p-8 shadow-sm">
               <h2 className="text-3xl font-bold mb-6">Envíanos un Mensaje</h2>
               <p className="text-muted-foreground mb-6">
-                Completa el formulario y nos pondremos en contacto contigo lo antes posible.
+                Completa el formulario y nos pondremos en contacto contigo lo
+                antes posible.
               </p>
 
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
@@ -161,7 +224,10 @@ export default function ContactPage() {
                         <FormItem>
                           <FormLabel>Correo Electrónico</FormLabel>
                           <FormControl>
-                            <Input placeholder="tucorreo@ejemplo.com" {...field} />
+                            <Input
+                              placeholder="tucorreo@ejemplo.com"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -175,9 +241,17 @@ export default function ContactPage() {
                       name="telefono"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Teléfono <span className="text-muted-foreground text-sm">(opcional)</span></FormLabel>
+                          <FormLabel>
+                            Teléfono{" "}
+                            <span className="text-muted-foreground text-sm">
+                              (opcional)
+                            </span>
+                          </FormLabel>
                           <FormControl>
-                            <Input placeholder="Tu número de teléfono" {...field} />
+                            <Input
+                              placeholder="Tu número de teléfono"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -190,7 +264,10 @@ export default function ContactPage() {
                         <FormItem>
                           <FormLabel>Asunto</FormLabel>
                           <FormControl>
-                            <Input placeholder="Asunto de tu mensaje" {...field} />
+                            <Input
+                              placeholder="Asunto de tu mensaje"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -229,16 +306,8 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* FAQ Section */}
-        <section className="mt-20">
-          <div className="flex items-center gap-4 mb-8">
-            <MessageSquare className="h-8 w-8 text-amber-600" />
-            <div className="flex flex-col">
-              <h2 className="text-3xl font-bold">Preguntas Frecuentes</h2>
-              <p className="text-muted-foreground">En breve actualizaremos esta sección</p>
-            </div>
-          </div>
-
+        {/* FAQ Section 
+        <section className="mt-20">*/}
           {/*<Accordion type="single" collapsible className="max-w-3xl">
             {faqs.map((faq, index) => (
               <AccordionItem key={index} value={`item-${index}`}>
@@ -250,17 +319,8 @@ export default function ContactPage() {
                 </AccordionContent>
               </AccordionItem>
             ))}
-          </Accordion>*/}
-
-          <div className="mt-10 text-center">
-            <p className="text-muted-foreground mb-4">
-              ¿No encuentras la respuesta que buscas?
-            </p>
-            <Button asChild>
-              <Link href="mailto:granespiritumexico@gmail.com">Contáctanos directamente</Link>
-            </Button>
-          </div>
-        </section>
+          </Accordion>
+        </section>*/}
       </div>
     </div>
   );
