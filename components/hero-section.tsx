@@ -51,7 +51,7 @@ export default function HeroSection() {
               La Tradición del Destilado Artesanal
             </h1>
             <p className="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Descubre nuestra colección de destilados artesanales elaborados con técnicas ancestrales por maestros destiladoeros mexicanos.
+              Descubre nuestra colección de destilados artesanales elaborados con técnicas ancestrales por maestros destiladores mexicanos.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-amber-600 hover:bg-amber-700 text-white">
