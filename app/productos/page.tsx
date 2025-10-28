@@ -240,7 +240,7 @@ export default function ProductsPage() {
         <div className="mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">Nuestros destilados</h1>
+              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">Nuestros Destilados</h1>
               <p className="text-lg text-gray-600">Descubre la tradición y sabor auténtico de México</p>
             </div>
             <div className="flex items-center gap-3">

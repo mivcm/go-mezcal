@@ -29,19 +29,19 @@ export const footerLinks: FooterLink[] = [
     title: "Productos",
     items: [
       {
-        label: "destilado Joven",
+        label: "Destilado Joven",
         href: "/productos?categoria=joven",
       },
       {
-        label: "destilado Reposado",
+        label: "Destilado Reposado",
         href: "/productos?categoria=reposado",
       },
       {
-        label: "destilado Añejo",
+        label: "Destilado Añejo",
         href: "/productos?categoria=anejo",
       },
       {
-        label: "destilado Ancestral",
+        label: "Destilado Ancestral",
         href: "/productos?categoria=ancestral",
       },
       {

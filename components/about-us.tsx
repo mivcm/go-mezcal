@@ -206,7 +206,7 @@ export default function AboutUs() {
             </span>
           </div>
           <h3 className="text-2xl md:text-3xl font-bold mb-4">
-            Descubre la Diferencia del destilado Auténtico
+            Descubre la Diferencia del Destilado Auténtico
           </h3>
           <p className="text-amber-100 mb-6 max-w-2xl mx-auto">
             Cada sorbo es un viaje a través de siglos de tradición,

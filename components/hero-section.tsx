@@ -48,7 +48,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 z-20 flex items-center justify-center text-center p-4">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
-              La Tradición del destilado Artesanal
+              La Tradición del Destilado Artesanal
             </h1>
             <p className="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
               Descubre nuestra colección de destilados artesanales elaborados con técnicas ancestrales por maestros destiladoeros mexicanos.

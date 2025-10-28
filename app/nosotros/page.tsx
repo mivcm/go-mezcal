@@ -74,7 +74,7 @@ export default function AboutPage() {
       <section className="relative py-10 px-4 text-center bg-gradient-to-b from-card to-background">
         <div className="container max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-primary animate-fade-in-up">
-            Go destilado
+            Go Mezcal
           </h1>
           <div
             className="flex flex-wrap justify-center gap-3 animate-fade-in-up"

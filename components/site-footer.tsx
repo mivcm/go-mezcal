@@ -15,7 +15,7 @@ export function SiteFooter() {
               </span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-sm">
-              destilados artesanales de la más alta calidad, producidos por maestros destiladoeros con técnicas tradicionales que preservan la esencia y el alma del agave mexicano.
+              Destilados artesanales de la más alta calidad, producidos por maestros destiladores con técnicas tradicionales que preservan la esencia y el alma del agave mexicano.
             </p>
             <div className="flex space-x-3 mt-2">
               {socialLinks.map((item) => (

@@ -13,7 +13,7 @@ export const products: Product[] = [
       "https://images.pexels.com/photos/5947037/pexels-photo-5947037.jpeg",
     ],
     description:
-      "Un destilado joven excepcional, elaborado con agave Espadín cultivado en las montañas de Oaxaca. Su sabor combina notas ahumadas con toques cítricos y herbales, resultado de un proceso de destilación tradicional que ha pasado por generaciones. Cada sorbo revela la esencia de la tierra oaxaqueña y la maestría de nuestros maestros destiladoeros.",
+      "Un destilado joven excepcional, elaborado con agave Espadín cultivado en las montañas de Oaxaca. Su sabor combina notas ahumadas con toques cítricos y herbales, resultado de un proceso de destilación tradicional que ha pasado por generaciones. Cada sorbo revela la esencia de la tierra oaxaqueña y la maestría de nuestros maestros destiladores.",
     shortDescription:
       "destilado joven con agave Espadín, notas ahumadas y cítricas.",
     abv: 45,

@@ -174,7 +174,7 @@ export default function ContactPage() {
                       className="w-full bg-amber-600 hover:bg-amber-700"
                     >
                       <Link href="mailto:gomezcal.mexico@gmail.com">
-                        Contáctanos directamente
+                        Contáctanos Directamente
                       </Link>
                     </Button>
                   </div>
