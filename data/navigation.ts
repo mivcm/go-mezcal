@@ -29,19 +29,19 @@ export const footerLinks: FooterLink[] = [
     title: "Productos",
     items: [
       {
-        label: "Mezcal Joven",
+        label: "destilado Joven",
         href: "/productos?categoria=joven",
       },
       {
-        label: "Mezcal Reposado",
+        label: "destilado Reposado",
         href: "/productos?categoria=reposado",
       },
       {
-        label: "Mezcal Añejo",
+        label: "destilado Añejo",
         href: "/productos?categoria=anejo",
       },
       {
-        label: "Mezcal Ancestral",
+        label: "destilado Ancestral",
         href: "/productos?categoria=ancestral",
       },
       {

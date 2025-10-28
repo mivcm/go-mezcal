@@ -99,7 +99,7 @@ export default function ProductsPage() {
             <div className="w-8 h-8 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
           </div>
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Cargando productos</h2>
-          <p className="text-gray-600">Descubriendo los mejores mezcales para ti...</p>
+          <p className="text-gray-600">Descubriendo los mejores destilados para ti...</p>
         </div>
       </div>
     )
@@ -240,7 +240,7 @@ export default function ProductsPage() {
         <div className="mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">Nuestros Mezcales</h1>
+              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">Nuestros destilados</h1>
               <p className="text-lg text-gray-600">Descubre la tradición y sabor auténtico de México</p>
             </div>
             <div className="flex items-center gap-3">
@@ -332,7 +332,7 @@ export default function ProductsPage() {
                     }`}
                     onClick={() => handleCategoryChange(null)}
                   >
-                    Todos los mezcales
+                    Todos los destilados
                   </Button>
                   {categories.map((category) => (
                     <Button

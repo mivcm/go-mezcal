@@ -13,9 +13,9 @@ export const products: Product[] = [
       "https://images.pexels.com/photos/5947037/pexels-photo-5947037.jpeg",
     ],
     description:
-      "Un mezcal joven excepcional, elaborado con agave Espadín cultivado en las montañas de Oaxaca. Su sabor combina notas ahumadas con toques cítricos y herbales, resultado de un proceso de destilación tradicional que ha pasado por generaciones. Cada sorbo revela la esencia de la tierra oaxaqueña y la maestría de nuestros maestros mezcaleros.",
+      "Un destilado joven excepcional, elaborado con agave Espadín cultivado en las montañas de Oaxaca. Su sabor combina notas ahumadas con toques cítricos y herbales, resultado de un proceso de destilación tradicional que ha pasado por generaciones. Cada sorbo revela la esencia de la tierra oaxaqueña y la maestría de nuestros maestros destiladoeros.",
     shortDescription:
-      "Mezcal joven con agave Espadín, notas ahumadas y cítricas.",
+      "destilado joven con agave Espadín, notas ahumadas y cítricas.",
     abv: 45,
     volume: 750,
     origin: "Oaxaca",
@@ -31,7 +31,7 @@ export const products: Product[] = [
           "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg",
         rating: 5,
         comment:
-          "Un mezcal excepcional, con un perfecto balance entre lo ahumado y las notas herbales.",
+          "Un destilado excepcional, con un perfecto balance entre lo ahumado y las notas herbales.",
         date: "2023-12-15",
       },
       {
@@ -60,9 +60,9 @@ export const products: Product[] = [
       "https://images.pexels.com/photos/5947051/pexels-photo-5947051.jpeg",
     ],
     description:
-      "Este mezcal ancestral es producido siguiendo métodos prehispánicos. Destilado en ollas de barro y fermentado en pieles de animal, conserva la esencia más pura de la tradición. Elaborado con agave Tobalá silvestre, presenta una complejidad aromática impresionante con notas minerales, especiadas y dulces que transportan a las raíces más profundas de México.",
+      "Este destilado ancestral es producido siguiendo métodos prehispánicos. Destilado en ollas de barro y fermentado en pieles de animal, conserva la esencia más pura de la tradición. Elaborado con agave Tobalá silvestre, presenta una complejidad aromática impresionante con notas minerales, especiadas y dulces que transportan a las raíces más profundas de México.",
     shortDescription:
-      "Mezcal ancestral con agave Tobalá, destilado en ollas de barro.",
+      "destilado ancestral con agave Tobalá, destilado en ollas de barro.",
     abv: 48,
     volume: 500,
     origin: "Guerrero",
@@ -96,9 +96,9 @@ export const products: Product[] = [
       "https://images.pexels.com/photos/5947027/pexels-photo-5947027.jpeg",
     ],
     description:
-      "Un mezcal reposado que descansa por 6 meses en barricas de roble francés, integrando sutilmente notas de vainilla y caramelo a la base ahumada del agave Espadín. El resultado es un equilibrio perfecto entre la rusticidad del mezcal y la elegancia que aporta la madera, creando una experiencia sensorial única.",
+      "Un destilado reposado que descansa por 6 meses en barricas de roble francés, integrando sutilmente notas de vainilla y caramelo a la base ahumada del agave Espadín. El resultado es un equilibrio perfecto entre la rusticidad del destilado y la elegancia que aporta la madera, creando una experiencia sensorial única.",
     shortDescription:
-      "Mezcal reposado en barricas de roble francés por 6 meses.",
+      "destilado reposado en barricas de roble francés por 6 meses.",
     abv: 42,
     volume: 750,
     origin: "Oaxaca",
@@ -132,9 +132,9 @@ export const products: Product[] = [
       "https://images.pexels.com/photos/5947050/pexels-photo-5947050.jpeg",
     ],
     description:
-      "Este mezcal añejo representa la culminación de nuestra artesanía. Reposado durante 24 meses en barricas de roble americano previamente utilizadas para bourbon, desarrolla un perfil complejo con notas de chocolate, café, frutas secas y especias, manteniendo la esencia ahumada característica del mezcal.",
+      "Este destilado añejo representa la culminación de nuestra artesanía. Reposado durante 24 meses en barricas de roble americano previamente utilizadas para bourbon, desarrolla un perfil complejo con notas de chocolate, café, frutas secas y especias, manteniendo la esencia ahumada característica del destilado.",
     shortDescription:
-      "Mezcal añejo con 24 meses en barricas de roble americano.",
+      "destilado añejo con 24 meses en barricas de roble americano.",
     abv: 40,
     volume: 750,
     origin: "Durango",
@@ -149,7 +149,7 @@ export const products: Product[] = [
           "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg",
         rating: 5,
         comment:
-          "Un mezcal excepcional para disfrutar lentamente. Sus notas de chocolate y especias son increíbles.",
+          "Un destilado excepcional para disfrutar lentamente. Sus notas de chocolate y especias son increíbles.",
         date: "2023-11-25",
       },
     ],
@@ -168,8 +168,8 @@ export const products: Product[] = [
       "https://images.pexels.com/photos/5947020/pexels-photo-5947020.jpeg",
     ],
     description:
-      "Elaborado con agave Cupreata silvestre, este mezcal joven captura la esencia de las montañas de Guerrero. Su sabor intenso revela notas terrosas, herbales y frutales, con un final persistente y ligeramente picante que refleja el terroir único de la región.",
-    shortDescription: "Mezcal joven con agave Cupreata silvestre de Guerrero.",
+      "Elaborado con agave Cupreata silvestre, este destilado joven captura la esencia de las montañas de Guerrero. Su sabor intenso revela notas terrosas, herbales y frutales, con un final persistente y ligeramente picante que refleja el terroir único de la región.",
+    shortDescription: "destilado joven con agave Cupreata silvestre de Guerrero.",
     abv: 47,
     volume: 750,
     origin: "Guerrero",
@@ -185,7 +185,7 @@ export const products: Product[] = [
           "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg",
         rating: 4.5,
         comment:
-          "Un mezcal con carácter, me encantaron sus notas herbales y ese final picante tan característico.",
+          "Un destilado con carácter, me encantaron sus notas herbales y ese final picante tan característico.",
         date: "2023-12-05",
       },
     ],
@@ -240,7 +240,7 @@ export const products: Product[] = [
       "https://images.pexels.com/photos/5947048/pexels-photo-5947048.jpeg",
     ],
     description:
-      "Una edición limitada elaborada con agave Tepeztate, que tarda hasta 25 años en madurar en estado silvestre. Este mezcal joven ofrece una explosión de sabores con notas vegetales, cítricas y minerales, culminando en un final largo y complejo que refleja la paciencia requerida para su elaboración.",
+      "Una edición limitada elaborada con agave Tepeztate, que tarda hasta 25 años en madurar en estado silvestre. Este destilado joven ofrece una explosión de sabores con notas vegetales, cítricas y minerales, culminando en un final largo y complejo que refleja la paciencia requerida para su elaboración.",
     shortDescription:
       "Edición limitada con agave Tepeztate de 25 años de maduración.",
     abv: 49,
@@ -258,7 +258,7 @@ export const products: Product[] = [
           "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg",
         rating: 5,
         comment:
-          "Una experiencia incomparable. La complejidad del Tepeztate se aprecia perfectamente en este mezcal.",
+          "Una experiencia incomparable. La complejidad del Tepeztate se aprecia perfectamente en este destilado.",
         date: "2023-12-12",
       },
     ],
@@ -277,9 +277,9 @@ export const products: Product[] = [
       "https://images.pexels.com/photos/5947039/pexels-photo-5947039.jpeg",
     ],
     description:
-      "Siguiendo una antigua tradición, este mezcal se destila por tercera vez con una pechuga de pavo y una selección de frutas y especias locales. El resultado es un mezcal joven increíblemente aromático y complejo, con notas de frutas tropicales, canela, anís y un sutil carácter ahumado.",
+      "Siguiendo una antigua tradición, este destilado se destila por tercera vez con una pechuga de pavo y una selección de frutas y especias locales. El resultado es un destilado joven increíblemente aromático y complejo, con notas de frutas tropicales, canela, anís y un sutil carácter ahumado.",
     shortDescription:
-      "Mezcal de pechuga destilado con frutas y especias tradicionales.",
+      "destilado de pechuga destilado con frutas y especias tradicionales.",
     abv: 45,
     volume: 750,
     origin: "Michoacán",

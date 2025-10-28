@@ -195,7 +195,7 @@ export function SiteHeader() {
           <div className="flex">
             <Link href="/" className="mr-4 sm:mr-6 flex items-center space-x-2">
               <span className="font-bold text-xl sm:text-2xl bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">
-                Go.mezcal
+                Go.Mezcal
               </span>
             </Link>
             <nav className="hidden md:flex items-center space-x-4 sm:space-x-6 text-xs sm:text-sm font-medium">

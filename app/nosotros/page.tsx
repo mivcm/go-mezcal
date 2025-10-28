@@ -10,7 +10,7 @@ const values = [
     icon: "🌱",
     title: "Tradición",
     description:
-      "Respetamos y buscamos mantener los métodos ancestrales de producción de mezcal.",
+      "Respetamos y buscamos mantener los métodos ancestrales de producción de destilado.",
   },
   {
     icon: "🤝",
@@ -34,7 +34,7 @@ const productFeatures = [
   {
     category: "Nuestra Misión",
     items: [
-      "En Go.mezcal, nuestra misión es ser el puente que conecta a los pequeños productores artesanales de Colima y alrededores con un mercado más amplio. Nos dedicamos a honrar y preservar las tradiciones de la región, ofreciendo una plataforma confiable y profesional que impulse su crecimiento y reconocimiento.",
+      "En Go.Mezcal, nuestra misión es ser el puente que conecta a los pequeños productores artesanales de Colima y alrededores con un mercado más amplio. Nos dedicamos a honrar y preservar las tradiciones de la región, ofreciendo una plataforma confiable y profesional que impulse su crecimiento y reconocimiento.",
     ],
   },
   {
@@ -74,7 +74,7 @@ export default function AboutPage() {
       <section className="relative py-10 px-4 text-center bg-gradient-to-b from-card to-background">
         <div className="container max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-primary animate-fade-in-up">
-            Go Mezcal
+            Go destilado
           </h1>
           <div
             className="flex flex-wrap justify-center gap-3 animate-fade-in-up"
@@ -97,7 +97,7 @@ export default function AboutPage() {
               para llegar a un público más allá de sus comunidades.
             </p>
             <p className="text-lg leading-relaxed text-foreground mb-6 text-justify">
-              Go.mezcal surgió de la idea de crear un espacio donde nuestros
+              Go.Mezcal surgió de la idea de crear un espacio donde nuestros
               artesanos puedan mostrar sus productos al mundo, asegurando que
               cada botella de destilado o pieza artesanal tenga la visibilidad
               que merece.
@@ -127,7 +127,7 @@ export default function AboutPage() {
             <div className="w-full h-80 bg-gradient-to-br from-accent/20 to-primary/20 rounded-lg flex items-center justify-center">
               <img
                 src="/images/Nosotros.png"
-                alt="Proceso tradicional de destilación de mezcal"
+                alt="Proceso tradicional de destilación de destilado"
                 className="w-full h-full object-cover rounded-lg hover-lift"
               />
             </div>

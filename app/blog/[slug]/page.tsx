@@ -200,11 +200,11 @@ export default function BlogPostPage() {
                 </div>
                 <div>
                   <div className="font-medium text-lg">{post.author?.name || 'Autor desconocido'}</div>
-                  <div className="text-sm text-muted-foreground">Experto en Mezcal</div>
+                  <div className="text-sm text-muted-foreground">Experto en destilado</div>
                 </div>
               </div>
               <p className="text-sm text-muted-foreground">
-                Especialista en la cultura y producción del mezcal tradicional mexicano, con amplia experiencia en el sector.
+                Especialista en la cultura y producción del destilado tradicional mexicano, con amplia experiencia en el sector.
               </p>
             </div>
 

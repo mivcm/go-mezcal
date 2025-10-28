@@ -75,7 +75,7 @@ export default function ContactPage() {
       <section className="relative h-[40vh] bg-cover bg-center">
         <Image
           src="/images/Contacto.png"
-          alt="Contáctanos - Go.mezcal"
+          alt="Contáctanos - Go.Mezcal"
           fill
           className="object-cover"
           priority
@@ -88,7 +88,7 @@ export default function ContactPage() {
             </h1>
             <p className="text-lg text-white/90 max-w-xl mx-auto">
               Estamos aquí para atender tus dudas, recibir tus comentarios o
-              ayudarte con cualquier consulta sobre nuestros mezcales.
+              ayudarte con cualquier consulta sobre nuestros destilados.
             </p>
           </div>
         </div>
@@ -127,10 +127,10 @@ export default function ContactPage() {
                   <h3 className="font-medium text-lg">Correo Electrónico</h3>
                   <p className="text-muted-foreground">
                     <a
-                      href="mailto:granespiritumexico@gmail.com"
+                      href="mailto:gomezcal.mexico@gmail.com"
                       className="hover:text-amber-600"
                     >
-                      granespiritumexico@gmail.com
+                      gomezcal.mexico@gmail.com
                     </a>
                   </p>
                 </div>
@@ -173,7 +173,7 @@ export default function ContactPage() {
                       asChild
                       className="w-full bg-amber-600 hover:bg-amber-700"
                     >
-                      <Link href="mailto:granespiritumexico@gmail.com">
+                      <Link href="mailto:gomezcal.mexico@gmail.com">
                         Contáctanos directamente
                       </Link>
                     </Button>

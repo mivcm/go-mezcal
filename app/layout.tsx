@@ -10,9 +10,9 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Go.mezcal | Mezcales Artesanales",
+  title: "Go.Mezcal | Destilados Artesanales",
   description:
-    "Tienda en línea de mezcales artesanales mexicanos de la más alta calidad",
+    "Tienda en línea de destilados artesanales mexicanos de la más alta calidad",
 };
 
 export default function RootLayout({

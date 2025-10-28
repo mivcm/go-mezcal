@@ -94,7 +94,7 @@ export default function AboutUs() {
                     "https://images.pexels.com/photos/1209037/pexels-photo-1209037.jpeg" ||
                     "/placeholder.svg"
                   }
-                  alt="Maestro mezcalero trabajando con agave"
+                  alt="Maestro destiladoero trabajando con agave"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -125,7 +125,7 @@ export default function AboutUs() {
 
               <p className="text-lg leading-relaxed text-muted-foreground">
                 En{" "}
-                <span className="font-semibold text-amber-600">Go.mezcal</span>,
+                <span className="font-semibold text-amber-600">Go.Mezcal</span>,
                 nuestra misión es ser el puente que conecta a los pequeños
                 productores artesanales de Colima y alrededores con un mercado
                 más amplio. Nos dedicamos a honrar y preservar las tradiciones
@@ -206,7 +206,7 @@ export default function AboutUs() {
             </span>
           </div>
           <h3 className="text-2xl md:text-3xl font-bold mb-4">
-            Descubre la Diferencia del Mezcal Auténtico
+            Descubre la Diferencia del destilado Auténtico
           </h3>
           <p className="text-amber-100 mb-6 max-w-2xl mx-auto">
             Cada sorbo es un viaje a través de siglos de tradición,

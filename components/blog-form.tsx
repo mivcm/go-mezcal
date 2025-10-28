@@ -204,7 +204,7 @@ export function BlogForm({ initialData = {}, onSuccess, isEdit = false }: BlogFo
                     name="tags"
                     value={form.tags}
                     onChange={handleChange}
-                    placeholder="ej: añejo, joven, mezcal, etc.)"
+                    placeholder="ej: añejo, joven, destilado, etc.)"
                   />
                   {tagList.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-2">

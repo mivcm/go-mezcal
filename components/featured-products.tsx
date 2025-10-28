@@ -19,9 +19,9 @@ export default function FeaturedProducts() {
     <section className="py-16 bg-amber-50/50 dark:bg-stone-900">
       <div className="container">
         <div className="flex flex-col sm:flex-row justify-between items-baseline mb-8">
-          <h2 className="text-3xl font-bold">Mezcales Destacados</h2>
+          <h2 className="text-3xl font-bold">destilados Destacados</h2>
           <Link href="/productos" className="text-amber-600 hover:text-amber-700 font-medium">
-            Ver todos los mezcales
+            Ver todos los destilados
           </Link>
         </div>
         <ProductList products={products} />

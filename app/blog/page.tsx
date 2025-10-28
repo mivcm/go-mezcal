@@ -37,9 +37,9 @@ export default function BlogPage({
 
   return (
     <div className="container py-12">
-      <h1 className="text-4xl font-bold mb-2">Blog de Go.mezcal</h1>
+      <h1 className="text-4xl font-bold mb-2">Blog de Go.Mezcal</h1>
       <p className="text-xl text-muted-foreground mb-12">
-        Artículos sobre la cultura, producción y degustación del mezcal artesanal mexicano.
+        Artículos sobre la cultura, producción y degustación del destilado artesanal mexicano.
       </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -140,7 +140,7 @@ export default function BlogPage({
           <div className="rounded-lg border p-6 bg-amber-50 dark:bg-amber-900/10">
             <h3 className="text-lg font-bold mb-4">Suscríbete al Newsletter</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Recibe los últimos artículos y novedades sobre el mundo del mezcal.
+              Recibe los últimos artículos y novedades sobre el mundo del destilado.
             </p>
             <div className="space-y-2">
               <input 

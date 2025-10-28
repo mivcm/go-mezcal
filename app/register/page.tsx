@@ -170,7 +170,7 @@ export default function RegisterPage() {
           <h1 className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-2">
             Únete a nosotros
           </h1>
-          <p className="text-muted-foreground">Crea tu cuenta y descubre el mundo del mezcal auténtico</p>
+          <p className="text-muted-foreground">Crea tu cuenta y descubre el mundo del destilado auténtico</p>
         </div>
 
         {/* Register Card */}

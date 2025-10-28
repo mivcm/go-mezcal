@@ -11,11 +11,11 @@ export function SiteFooter() {
           <div className="flex flex-col gap-4">
             <Link href="/" className="flex items-center space-x-2">
               <span className="font-bold text-2xl bg-gradient-to-r from-amber-500 to-amber-700 bg-clip-text text-transparent">
-                Go.mezcal
+                Go.Mezcal
               </span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-sm">
-              Mezcales artesanales de la más alta calidad, producidos por maestros mezcaleros con técnicas tradicionales que preservan la esencia y el alma del agave mexicano.
+              destilados artesanales de la más alta calidad, producidos por maestros destiladoeros con técnicas tradicionales que preservan la esencia y el alma del agave mexicano.
             </p>
             <div className="flex space-x-3 mt-2">
               {socialLinks.map((item) => (
